@@ -5,8 +5,57 @@
     {
       "kind": "metadata",
       "mode": "100644",
+      "public_path": ".gitattributes",
+      "public_sha256": "39736b007281b51acbf0bc338667e3ebe23ffcf7f039459797f5496dfc298d25",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": ".github/dependabot.yml",
+      "public_sha256": "8bdfee64aa42141e52b00ecf4be482d6f56bb450fb48eacd449793d5d1ff4549",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": ".github/workflows/public-ci.yml",
+      "public_sha256": "81e93fc75903856346bb36368e84975fbf866a1bb3fbb069b129857b9c88a67e",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": ".github/workflows/public-codeql.yml",
+      "public_sha256": "53c22dbfccc6beb570fa96484c32c8d55cdc8a85ae0018b2d70b8a3ad902679d",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": ".github/workflows/public-dependency-review.yml",
+      "public_sha256": "8e10b48fbdfae9c2431ca5823896975447d282723b2753c7c1e604c39b1e6d13",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": ".github/workflows/public-integrity.yml",
+      "public_sha256": "0aba25e77226581dcfc2ac6e14da172f030c06243746a02a1f06bb426de5d2ad",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": ".github/workflows/public-scorecard.yml",
+      "public_sha256": "49d710d6239b9360e658ba9fbae65a1c3c9ae129cdc3e5780e330b29b95ac87a",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
       "public_path": "CONTRIBUTING.md",
-      "public_sha256": "ff6a06cc04a9c50e091b223d84ec4433480fe3c2731363efb4896ee8731471cc",
+      "public_sha256": "19af15764de8f970cc13b50c5d4ae6531a2d7533b4425dab8e97762226728221",
       "transformation": "NONE"
     },
     {
@@ -189,6 +238,13 @@
       "mode": "100644",
       "public_path": "tests/test_repair_policy.py",
       "public_sha256": "fe024abc81f4fb64e837c160edd520196f5b699aa9d84de6a2515f33fb796948",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "test",
+      "mode": "100644",
+      "public_path": "tools/verify_public_artifact.py",
+      "public_sha256": "65d958ad2ca7cc3305c5817e15c4e27c97acf8d6f335a6cb647660be2c538189",
       "transformation": "NONE"
     }
   ],

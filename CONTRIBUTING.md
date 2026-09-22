@@ -24,6 +24,8 @@ This is an upstream contribution-policy decision, not a restriction on license-c
 
 The restriction exists because the project has not yet finalized contributor rights/relicensing terms for a source-available commercial product. The project will not silently assume that a DCO, generic GitHub contribution or issue comment grants broader relicensing rights.
 
+Automated dependency-update pull requests are advisory signals only during this stage. Do not merge them directly into the public repository. Accepted updates are applied in the project's canonical source, verified there, and then republished as a fresh public projection.
+
 ## Before reporting a bug
 
 Please include, where relevant:
