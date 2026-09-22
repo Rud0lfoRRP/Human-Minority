@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
 
+from seed.app.core.errors import CanonicalJsonError
 from seed.app.core.hashing import canonical_sha256
 
 
@@ -141,9 +142,12 @@ class CredentialReference:
         }
 
     def integrity_valid(self) -> bool:
-        material = self.persistent_material()
-        material.pop("reference_id")
-        return self.reference_id == f"credential:{canonical_sha256(material)[:32]}"
+        try:
+            material = self.persistent_material()
+            material.pop("reference_id")
+            return self.reference_id == f"credential:{canonical_sha256(material)[:32]}"
+        except (AttributeError, TypeError, ValueError, CanonicalJsonError):
+            return False
 
 
 @dataclass(frozen=True)
@@ -301,7 +305,7 @@ class LiveProviderObservation:
     def integrity_valid(self) -> bool:
         try:
             return self.observation_fingerprint == canonical_sha256(self._material())
-        except (AttributeError, TypeError, ValueError):
+        except (AttributeError, TypeError, ValueError, CanonicalJsonError):
             return False
 
     @classmethod

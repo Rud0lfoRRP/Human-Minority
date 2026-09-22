@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import datetime, timezone
-from decimal import Decimal
+from decimal import Decimal, localcontext
 
 import pytest
 
@@ -40,7 +41,13 @@ def _diagnosis() -> Diagnosis:
     )
 
 
-def _request(*, attempt_number: int = 1, candidate_revision: str = "candidate-0") -> RepairRequest:
+def _request(
+    *,
+    attempt_number: int = 1,
+    candidate_revision: str = "candidate-0",
+    allowed_paths: tuple[str, ...] = ("src",),
+    forbidden_paths: tuple[str, ...] = ("src/secrets",),
+) -> RepairRequest:
     return RepairRequest(
         request_id=f"repair-{attempt_number}",
         root_candidate_revision="candidate-0",
@@ -48,8 +55,8 @@ def _request(*, attempt_number: int = 1, candidate_revision: str = "candidate-0"
         claim_id="claim-1",
         diagnosis=_diagnosis(),
         acceptance_criteria=("focused check passes",),
-        allowed_paths=("src",),
-        forbidden_paths=("src/secrets",),
+        allowed_paths=allowed_paths,
+        forbidden_paths=forbidden_paths,
         attempt_number=attempt_number,
         post_repair_verification_plan_id="plan-1",
         required_check_ids=("check-1",),
@@ -135,6 +142,26 @@ def test_scope_accepts_only_allowed_nonforbidden_paths() -> None:
         validate_repair_scope(request, ("src/../escape.py",))
 
 
+def test_repair_contracts_reject_mutable_sequence_inputs() -> None:
+    request = _request()
+    with pytest.raises(ValueError, match="allowed_paths must be a tuple"):
+        replace(request, allowed_paths=["src"])  # type: ignore[arg-type]
+
+    policy = _policy()
+    with pytest.raises(ValueError, match="allowed providers must be a tuple"):
+        replace(policy, allowed_providers=["provider-a"])  # type: ignore[arg-type]
+
+
+def test_scope_uses_portable_casefold_and_unicode_keys() -> None:
+    request = _request()
+    with pytest.raises(RepairScopeViolation, match="forbidden scope"):
+        validate_repair_scope(request, ("src/SECRETS/token.txt",))
+
+    unicode_request = _request(forbidden_paths=("src/café",))
+    with pytest.raises(RepairScopeViolation, match="forbidden scope"):
+        validate_repair_scope(unicode_request, ("src/cafe\u0301/token.txt",))
+
+
 def test_auto_repair_is_admitted_only_inside_policy_budget() -> None:
     decision = decide_repair(
         _request(),
@@ -153,6 +180,34 @@ def test_money_cap_fails_closed() -> None:
         _request(),
         policy=_policy(),
         budget=_budget(spent="9.50"),
+        progress=_progress(),
+        watchdog=_watchdog(),
+        route=_route(),
+        now=datetime(2029, 1, 1, tzinfo=timezone.utc),
+    )
+    assert decision.action is RepairAction.STOP_LIMIT
+
+
+def test_money_cap_is_independent_of_ambient_decimal_precision() -> None:
+    with localcontext() as context:
+        context.prec = 2
+        decision = decide_repair(
+            replace(_request(), estimated_cost=Decimal("0.11")),
+            policy=replace(_policy(), money_cap=Decimal("10.00")),
+            budget=_budget(spent="9.90"),
+            progress=_progress(),
+            watchdog=_watchdog(),
+            route=_route(),
+            now=datetime(2029, 1, 1, tzinfo=timezone.utc),
+        )
+    assert decision.action is RepairAction.STOP_LIMIT
+
+
+def test_money_cap_detects_sub_precision_overage_exactly() -> None:
+    decision = decide_repair(
+        replace(_request(), estimated_cost=Decimal("0.0000000000000000000000000001")),
+        policy=replace(_policy(), money_cap=Decimal("10")),
+        budget=_budget(spent="10"),
         progress=_progress(),
         watchdog=_watchdog(),
         route=_route(),

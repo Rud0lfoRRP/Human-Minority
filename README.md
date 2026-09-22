@@ -77,6 +77,38 @@ human/task authority
 
 and must fail closed when a required verification or confinement boundary cannot be established.
 
+## Requirements
+
+This Early Source Drop is tested against **Python 3.12–3.14**. The exported runtime modules use only the Python standard library; `pytest` is needed only for the test suite.
+
+Run examples from the repository root so the exported `seed.app` namespace is importable.
+
+## Quick example
+
+```python
+from seed.app.core.hashing import canonical_sha256
+from seed.app.source.portable_paths import canonical_path
+
+path = canonical_path("src/example.py")
+digest = canonical_sha256({"path": path, "claim": "candidate-produced"})
+
+print(path)
+print(digest)
+```
+
+This demonstrates two public primitives only; it is not the complete Human Minority execution or verification vertical.
+
+## Running tests
+
+From the repository root:
+
+```bash
+python -m pip install -r requirements-test.txt
+python -m pytest
+```
+
+If the `pytest` console script is on `PATH`, a plain `pytest` invocation works too; the repository ships `pytest.ini` with the public package root and test directory configured.
+
 ## Security status
 
 The Early Source Drop intentionally omits private operational execution machinery. It must not be described as a finished sandbox or as a complete secure-execution product.

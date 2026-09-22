@@ -8,6 +8,9 @@ from decimal import Decimal
 from enum import Enum
 from pathlib import PurePosixPath
 
+from seed.app.core.errors import CommandError
+from seed.app.source.portable_paths import portable_key
+
 
 class FailureClass(Enum):
     CANDIDATE_DEFECT = "CANDIDATE_DEFECT"
@@ -295,14 +298,22 @@ def normalize_repo_path(path: str) -> str:
 
 
 def _require_unique_paths(values: tuple[str, ...], name: str, *, allow_empty: bool = False) -> None:
+    if type(values) is not tuple:
+        raise ValueError(f"{name} must be a tuple")
     if not values and not allow_empty:
         raise ValueError(f"{name} must not be empty")
     normalized = tuple(normalize_repo_path(value) for value in values)
-    if len(set(normalized)) != len(normalized):
-        raise ValueError(f"{name} must be unique")
+    try:
+        portable = tuple(portable_key(value) for value in normalized)
+    except CommandError as exc:
+        raise ValueError(f"{name} must contain portable repository paths") from exc
+    if len(set(portable)) != len(portable):
+        raise ValueError(f"{name} must be portable-unique")
 
 
 def _require_unique_text(values: tuple[str, ...], name: str) -> None:
+    if type(values) is not tuple:
+        raise ValueError(f"{name} must be a tuple")
     if not values:
         raise ValueError(f"{name} must not be empty")
     for value in values:

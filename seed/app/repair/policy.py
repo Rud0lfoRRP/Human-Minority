@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 from datetime import datetime
+from fractions import Fraction
+
+from seed.app.core.errors import CommandError
+from seed.app.source.portable_paths import portable_key
 
 from .contracts import (
     BudgetSnapshot,
@@ -66,7 +70,11 @@ def decide_repair(
         return _decision(RepairAction.STOP_LIMIT, "attempt cap reached")
     if request.attempt_number != budget.attempts_used + 1:
         return _decision(RepairAction.ESCALATE_POLICY, "attempt sequence is inconsistent")
-    if budget.money_spent + request.estimated_cost > policy.money_cap:
+    if _exact_decimal_sum_exceeds(
+        budget.money_spent,
+        request.estimated_cost,
+        policy.money_cap,
+    ):
         return _decision(RepairAction.STOP_LIMIT, "money cap would be exceeded")
     if policy.deadline is not None:
         if now is None:
@@ -111,13 +119,13 @@ def decide_repair(
 def validate_repair_scope(request: RepairRequest, changed_paths: tuple[str, ...]) -> None:
     """Fail closed if a produced candidate escapes the request's path envelope."""
 
-    allowed = tuple(normalize_repo_path(path) for path in request.allowed_paths)
-    forbidden = tuple(normalize_repo_path(path) for path in request.forbidden_paths)
+    allowed = tuple(portable_key(path) for path in request.allowed_paths)
+    forbidden = tuple(portable_key(path) for path in request.forbidden_paths)
     for raw_path in changed_paths:
         try:
-            path = normalize_repo_path(raw_path)
-        except ValueError as error:
-            raise RepairScopeViolation("changed path is not a normalized repository path") from error
+            path = portable_key(normalize_repo_path(raw_path))
+        except (ValueError, CommandError) as error:
+            raise RepairScopeViolation("changed path is not a portable repository path") from error
         if any(_within(path, boundary) for boundary in forbidden):
             raise RepairScopeViolation("changed path intersects forbidden scope")
         if not any(_within(path, boundary) for boundary in allowed):
@@ -157,6 +165,12 @@ def append_attempt(
         if previous.root_candidate_revision != record.root_candidate_revision:
             raise ValueError("attempt root candidate must remain stable")
     return (*history, record)
+
+
+def _exact_decimal_sum_exceeds(spent, estimated, cap) -> bool:
+    """Compare Decimal amounts exactly, independent of ambient Decimal context."""
+
+    return Fraction(spent) + Fraction(estimated) > Fraction(cap)
 
 
 def _within(path: str, boundary: str) -> bool:

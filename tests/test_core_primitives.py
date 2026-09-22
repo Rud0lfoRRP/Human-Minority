@@ -143,6 +143,18 @@ def test_self_hash_exclusion_golden_vector_is_immutable() -> None:
     assert value == original
 
 
+def test_self_hash_exclusion_paths_are_nfc_normalized() -> None:
+    nfd = {"cafe\u0301": "remove-me", "kept": 1}
+    nfc = {"café": "remove-me", "kept": 1}
+    assert _self_hash_with_exclusions(
+        nfd,
+        excluded_fields={("cafe\u0301",)},
+    ) == _self_hash_with_exclusions(
+        nfc,
+        excluded_fields={("café",)},
+    )
+
+
 @pytest.mark.parametrize(
     "paths",
     [

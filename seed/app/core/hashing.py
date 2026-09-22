@@ -4,12 +4,11 @@ from __future__ import annotations
 
 from hashlib import sha256
 import hmac
-from typing import Any, Iterable, Protocol
+from typing import Any, Iterable
+import unicodedata
 
 from .canonical_json import CanonicalPath, JsonValue, canonical_json_bytes, normalize_json
 from .errors import CoreErrorCode, IntegrityError
-
-
 
 
 def sha256_hex(data: bytes) -> str:
@@ -39,7 +38,19 @@ def _validate_exclusions(paths: Iterable[CanonicalPath]) -> tuple[CanonicalPath,
                 "self-hash exclusions must be non-empty exact object-field paths",
                 details={"path": repr(path)},
             )
-        normalized.append(path)
+        canonical: list[str] = []
+        for item in path:
+            item = unicodedata.normalize("NFC", item)
+            try:
+                item.encode("utf-8", errors="strict")
+            except UnicodeEncodeError as exc:
+                raise IntegrityError(
+                    CoreErrorCode.INVALID_HASH_EXCLUSION,
+                    "self-hash exclusions must contain valid Unicode scalar values",
+                    details={"path": repr(path)},
+                ) from exc
+            canonical.append(item)
+        normalized.append(tuple(canonical))
     if len(normalized) != len(set(normalized)):
         raise IntegrityError(CoreErrorCode.INVALID_HASH_EXCLUSION, "duplicate self-hash exclusion")
     ordered = tuple(sorted(normalized))
@@ -104,12 +115,6 @@ def _self_hash_with_exclusions(
     )
 
 
-
-
-
-
-
-
 def _require_expected_sha256(expected_hash: Any) -> str:
     if (
         type(expected_hash) is not str
@@ -133,5 +138,3 @@ def verify_sha256(data: bytes, expected_hash: str) -> None:
             "SHA-256 mismatch",
             details={"expected": expected_hash, "actual": actual},
         )
-
-

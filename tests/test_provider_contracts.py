@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from dataclasses import replace
+
 import pytest
 
 from seed.app.providers.contracts import (
@@ -81,6 +83,15 @@ def test_credential_reference_is_a_stable_lookup_identity_not_secret_material() 
     assert "SEED_TEST_TOKEN" in first.persistent_material()["binding_id"]
 
 
+def test_malformed_credential_reference_integrity_fails_closed() -> None:
+    credential = CredentialReference.create(
+        provider_id="provider-a",
+        backend=CredentialBackendKind.ENVIRONMENT,
+        binding_id="env:SEED_TEST_TOKEN",
+    )
+    assert replace(credential, binding_id="env:\ud800").integrity_valid() is False
+
+
 def test_credential_reference_rejects_secret_like_binding_material() -> None:
     with pytest.raises(ValueError, match="lookup reference, not secret material"):
         CredentialReference.create(
@@ -102,6 +113,30 @@ def test_live_observation_sorts_facts_and_binds_integrity() -> None:
         "runnable",
     )
     assert observation.integrity_valid() is True
+
+
+def test_noncanonical_observation_material_is_integrity_invalid() -> None:
+    observation = _observation(
+        observation_id="obs-invalid-unicode",
+        stage=ProviderCheckStage.ASSIGNMENT,
+        observed_at="2026-09-16T10:00:00Z",
+        facts=(_fact("authenticated"),),
+    )
+    malformed = replace(observation, source_ref="source:\ud800")
+    assert malformed.integrity_valid() is False
+
+    result = evaluate_observation(
+        malformed,
+        expected_route=_route(),
+        required_stage=ProviderCheckStage.ASSIGNMENT,
+        now="2026-09-16T10:01:00Z",
+        policy=FreshnessPolicy(
+            max_age_seconds=600,
+            required_fact_names=("authenticated",),
+        ),
+    )
+    assert result.status is ObservationStatus.INDETERMINATE
+    assert result.reason_code == "OBSERVATION_INTEGRITY_INVALID"
 
 
 def test_required_fresh_provider_facts_are_accepted() -> None:
@@ -196,6 +231,34 @@ def test_post_observation_invalidation_makes_fact_stale_and_preserves_provenance
     assert result.status is ObservationStatus.STALE
     assert result.reason_code == "INVALIDATED_CREDENTIAL_CHANGED"
     assert result.provenance_refs == ("source:obs-1", "event:credential-rotated")
+
+
+def test_same_instant_invalidation_makes_observation_stale() -> None:
+    observation = _observation(
+        observation_id="obs-same-instant",
+        stage=ProviderCheckStage.ASSIGNMENT,
+        observed_at="2026-09-16T10:00:00Z",
+        facts=(_fact("authenticated"),),
+    )
+    result = evaluate_observation(
+        observation,
+        expected_route=_route(),
+        required_stage=ProviderCheckStage.ASSIGNMENT,
+        now="2026-09-16T10:00:00Z",
+        policy=FreshnessPolicy(
+            max_age_seconds=600,
+            required_fact_names=("authenticated",),
+        ),
+        invalidations=(
+            ProviderInvalidation(
+                kind=ProviderInvalidationKind.CREDENTIAL_CHANGED,
+                occurred_at="2026-09-16T10:00:00Z",
+                provenance_ref="event:same-instant-credential-change",
+            ),
+        ),
+    )
+    assert result.status is ObservationStatus.STALE
+    assert result.reason_code == "INVALIDATED_CREDENTIAL_CHANGED"
 
 
 def test_route_change_invalidation_preserves_source_and_event_provenance() -> None:

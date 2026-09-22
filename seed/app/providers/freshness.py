@@ -100,7 +100,7 @@ def evaluate_observation(
         return _result(observation, ObservationStatus.STALE, "PROVIDER_VALIDITY_EXPIRED")
     for invalidation in invalidations:
         occurred = _instant(invalidation.occurred_at)
-        if observed < occurred <= current:
+        if observed <= occurred <= current:
             return ObservationEvaluation(
                 ObservationStatus.STALE,
                 f"INVALIDATED_{invalidation.kind.value}",

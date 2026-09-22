@@ -107,6 +107,33 @@ def test_nonportable_repository_paths_fail_closed(path: str) -> None:
     assert caught.value.code is CoreErrorCode.ADMISSION_INVALID
 
 
+@pytest.mark.parametrize(
+    "path",
+    [
+        "COM¹",
+        "com².txt",
+        "Folder/LPT³.data",
+        "lpt¹",
+    ],
+)
+def test_windows_superscript_device_names_fail_closed(path: str) -> None:
+    with pytest.raises(CommandError) as caught:
+        canonical_path(path)
+    assert caught.value.code is CoreErrorCode.ADMISSION_INVALID
+
+
+@pytest.mark.parametrize("path", ["src/\ud800.py", "src/\udfff.py"])
+def test_lone_unicode_surrogates_fail_closed(path: str) -> None:
+    with pytest.raises(CommandError) as caught:
+        canonical_path(path)
+    assert caught.value.code is CoreErrorCode.ADMISSION_INVALID
+
+
+def test_valid_non_bmp_and_nonreserved_names_remain_allowed() -> None:
+    assert canonical_path("src/😀.py") == "src/😀.py"
+    assert canonical_path("COM0.txt") == "COM0.txt"
+
+
 def test_portable_path_is_nfc_normalized() -> None:
     assert canonical_path("Cafe\u0301/file.txt") == "Café/file.txt"
 

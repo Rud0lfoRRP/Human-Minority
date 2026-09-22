@@ -10,9 +10,11 @@ from seed.app.core.errors import CommandError, CoreErrorCode
 
 
 _WINDOWS_INVALID = set('<>:"|?*')
-_RESERVED = {"CON", "PRN", "AUX", "NUL"} | {
-    f"{prefix}{number}" for prefix in ("COM", "LPT") for number in range(1, 10)
-}
+_RESERVED = (
+    {"CON", "PRN", "AUX", "NUL"}
+    | {f"{prefix}{number}" for prefix in ("COM", "LPT") for number in range(1, 10)}
+    | {f"{prefix}{number}" for prefix in ("COM", "LPT") for number in ("¹", "²", "³")}
+)
 
 
 def _admission(message: str) -> CommandError:
@@ -24,6 +26,10 @@ def canonical_path(value: Any) -> str:
 
     if type(value) is not str:
         raise _admission("manifest path must be a plain string")
+    try:
+        value.encode("utf-8", errors="strict")
+    except UnicodeEncodeError as exc:
+        raise _admission("manifest path must contain valid Unicode scalar values") from exc
     path = unicodedata.normalize("NFC", value)
     if (
         not path
