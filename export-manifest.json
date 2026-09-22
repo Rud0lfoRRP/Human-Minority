@@ -1,0 +1,196 @@
+{
+  "artifact_stage": "EARLY_SOURCE_DROP",
+  "boundary_document": "PUBLIC_EARLY_SOURCE_BOUNDARY_V2",
+  "files": [
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "CONTRIBUTING.md",
+      "public_sha256": "ff6a06cc04a9c50e091b223d84ec4433480fe3c2731363efb4896ee8731471cc",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "LICENSE",
+      "public_sha256": "0d3ee870dbf77dcf3e37da95ae10adc8fe1eb02007dfb7c504e2f1dcb4d8bf0d",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "README.md",
+      "public_sha256": "9f51e637c4d36e7342260c5e5254d2c71fae0a4abf47b14ed16575646cb91432",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "SECURITY.md",
+      "public_sha256": "07b3e2857a50c6edc0e73c4c61b5da1238f06b2753ae9831d733add7968d8189",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "requirements-test.txt",
+      "public_sha256": "93c4ab5f175d24229e46ec70a8ecaeb6db8b36e3f54d8005808044c060acbc92",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/__init__.py",
+      "public_sha256": "1a2c9ae987b5afe4392693fdee9600f22605e76e0c5c9a18d55acec41a160966",
+      "transformation": "CURATED_INITIALIZER_V2"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/core/__init__.py",
+      "public_sha256": "1a2c9ae987b5afe4392693fdee9600f22605e76e0c5c9a18d55acec41a160966",
+      "transformation": "CURATED_INITIALIZER_V2"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/core/canonical_json.py",
+      "public_sha256": "910ec1619164fab6a9276820a5c2c168b6c3ac03f6485ef8146d94aaf60efcbd",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/core/errors.py",
+      "public_sha256": "7b85e593ecda2c1eca525fac8e553f138aa5e96db55d95a93e8521e4153ff70d",
+      "transformation": "CURATED_ERRORS_V2"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/core/hashing.py",
+      "public_sha256": "d6cdcb1cc6f619baa702514ed8e1f68757e3d4cf00e168e8e4d0e6d9784a1817",
+      "transformation": "HASHING_PRIMITIVES_V1"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/providers/__init__.py",
+      "public_sha256": "1a2c9ae987b5afe4392693fdee9600f22605e76e0c5c9a18d55acec41a160966",
+      "transformation": "CURATED_INITIALIZER_V2"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/providers/contracts.py",
+      "public_sha256": "fe73c8d2587cb07b81c1eeb0718fffc8800b8f98454941acc81f505f4efc208f",
+      "transformation": "PUBLIC_TEXT_SCRUB_V1"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/providers/credentials.py",
+      "public_sha256": "ef9aa33b1e117a1510c7d870864feef25aab1d8714ccdee7fcf77bf0c1c66c8f",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/providers/freshness.py",
+      "public_sha256": "06f3851488513e3258660f206e6b597f005309279e494c445a6af05cec77151d",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/repair/__init__.py",
+      "public_sha256": "1a2c9ae987b5afe4392693fdee9600f22605e76e0c5c9a18d55acec41a160966",
+      "transformation": "CURATED_INITIALIZER_V2"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/repair/contracts.py",
+      "public_sha256": "1841f010d200671c27c4dd71092a9ec6ccd5ff238f4ce68f1ac4b3bb4ba6ca43",
+      "transformation": "PUBLIC_TEXT_SCRUB_V1"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/repair/policy.py",
+      "public_sha256": "f9f11b779309d3e7887ab5d9282d39ba3a16f8ee1d9075d8b2a3b8b662a1ce5e",
+      "transformation": "PUBLIC_TEXT_SCRUB_V1"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/source/__init__.py",
+      "public_sha256": "1a2c9ae987b5afe4392693fdee9600f22605e76e0c5c9a18d55acec41a160966",
+      "transformation": "CURATED_INITIALIZER_V2"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/source/contracts.py",
+      "public_sha256": "c5f0eda9d01df0780339dd04cbdb60cf7c335daf6d6e44f0034defa7ac053ea3",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/source/portable_paths.py",
+      "public_sha256": "1455c4a6af371ebe3a0b94222e04f0f39566d3454ee1c8b4553f6981e8b8e012",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/verification/__init__.py",
+      "public_sha256": "1a2c9ae987b5afe4392693fdee9600f22605e76e0c5c9a18d55acec41a160966",
+      "transformation": "CURATED_INITIALIZER_V2"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/verification/claims.py",
+      "public_sha256": "1bd1675d06789fefc0b874cd9f2fc8631896a9a421728986128f67dd70bc6707",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "test",
+      "mode": "100644",
+      "public_path": "tests/test_contracts_and_paths.py",
+      "public_sha256": "150d5c7edc91177bd6283a8eb15b0a636e7e155dd5ab4a11961422218ff4cff0",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "test",
+      "mode": "100644",
+      "public_path": "tests/test_core_primitives.py",
+      "public_sha256": "bc35bd07cb0bce4b64e65641226274dd91c74829305e78d9ca328619b4e8e342",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "test",
+      "mode": "100644",
+      "public_path": "tests/test_provider_contracts.py",
+      "public_sha256": "1c2d65abf00680e5a4b56e57b76b04318b5241745dadd0be738e5ceced4c8e00",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "test",
+      "mode": "100644",
+      "public_path": "tests/test_public_boundary.py",
+      "public_sha256": "493a3cc08b57d84fdc72fb61f03088c005a5c5e30ebe2ddcc1f038a0ea0cb43e",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "test",
+      "mode": "100644",
+      "public_path": "tests/test_repair_policy.py",
+      "public_sha256": "fe024abc81f4fb64e837c160edd520196f5b699aa9d84de6a2515f33fb796948",
+      "transformation": "NONE"
+    }
+  ],
+  "schema_version": "seed-public-release-manifest-v1"
+}
