@@ -33,11 +33,11 @@ The supported profile must document its exact operating-system/container/runtime
 
 ## Reporting a security issue
 
-Before the repository is made public, a maintainer-controlled private reporting channel must be configured and verified.
+Report security issues privately to **humanminority.security@proton.me**.
 
-The preferred channel is GitHub private vulnerability reporting when that feature is available for the public repository. If it is unavailable, the repository must provide an explicit maintainer-controlled security contact before the visibility change.
+This maintainer-controlled mailbox is the publication security contact. GitHub private vulnerability reporting may also be enabled for the public repository as an additional private reporting channel.
 
-The repository is not publication-ready until one of those private reporting paths has been verified. Do not include secrets, live credentials, private customer data or exploit details affecting an unpatched deployment in a public issue.
+Do not include secrets, live credentials, private customer data or exploit details affecting an unpatched deployment in a public issue.
 
 ## Scope changes
 
