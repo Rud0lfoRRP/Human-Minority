@@ -55,6 +55,15 @@ def _require_text_tuple(values: object, name: str) -> None:
         raise ValueError(f"{name} must contain non-empty plain strings")
 
 
+def _require_nonempty_unique_text_tuple(values: object, name: str) -> None:
+    _require_text_tuple(values, name)
+    assert isinstance(values, tuple)
+    if not values:
+        raise ValueError(f"{name} must not be empty")
+    if len(values) != len(set(values)):
+        raise ValueError(f"{name} must be unique")
+
+
 @dataclass(frozen=True)
 class VerificationCheck:
     check_id: str
@@ -81,7 +90,7 @@ class VerificationResult:
             _require_text(getattr(self, field_name), field_name)
         if not isinstance(self.status, VerificationStatus):
             raise ValueError("status must be a VerificationStatus")
-        _require_text_tuple(self.evidence_ids, "evidence_ids")
+        _require_nonempty_unique_text_tuple(self.evidence_ids, "evidence_ids")
 
 
 @dataclass(frozen=True)

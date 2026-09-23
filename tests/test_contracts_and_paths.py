@@ -292,3 +292,22 @@ def test_claim_evidence_and_source_contracts_reject_mutable_or_malformed_fields(
             "c" * 64,
             -1,
         )
+
+
+def test_verification_result_requires_nonempty_unique_evidence_ids() -> None:
+    with pytest.raises(ValueError, match="must not be empty"):
+        VerificationResult(
+            "result-empty",
+            "claim-1",
+            "check-1",
+            VerificationStatus.PASS,
+            (),
+        )
+    with pytest.raises(ValueError, match="must be unique"):
+        VerificationResult(
+            "result-duplicate",
+            "claim-1",
+            "check-1",
+            VerificationStatus.PASS,
+            ("evidence-1", "evidence-1"),
+        )
