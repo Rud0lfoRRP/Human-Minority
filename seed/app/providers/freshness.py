@@ -78,6 +78,20 @@ class ObservationEvaluation:
     observation_id: str
     provenance_refs: tuple[str, ...]
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.status, ObservationStatus):
+            raise ValueError("status must be an ObservationStatus")
+        for name, value in (
+            ("reason_code", self.reason_code),
+            ("observation_id", self.observation_id),
+        ):
+            if type(value) is not str or not value:
+                raise ValueError(f"{name} must be a non-empty plain string")
+        if type(self.provenance_refs) is not tuple or any(
+            type(value) is not str or not value for value in self.provenance_refs
+        ):
+            raise ValueError("provenance_refs must be a tuple of non-empty plain strings")
+
 
 def evaluate_observation(
     observation: LiveProviderObservation,

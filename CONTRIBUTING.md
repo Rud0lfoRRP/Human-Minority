@@ -1,4 +1,4 @@
-# Contributing — Early Source Drop Draft
+# Contributing — Early Source Drop
 
 Thank you for taking the time to inspect Human Minority.
 

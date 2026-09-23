@@ -381,3 +381,32 @@ def test_automatic_substitution_requires_explicit_approval_for_profile_change() 
         now=datetime(2029, 1, 1, tzinfo=timezone.utc),
     )
     assert approved.action is RepairAction.EXECUTE_REPAIR
+
+
+@pytest.mark.parametrize(
+    "changed_path",
+    (
+        "SRC/app.py",
+        "Src/new_module.py",
+        "ſrc/app.py",
+    ),
+)
+def test_allowed_scope_requires_exact_case_and_unicode_spelling(changed_path: str) -> None:
+    request = replace(
+        _request(),
+        allowed_paths=("src",),
+        forbidden_paths=("src/secrets",),
+    )
+    with pytest.raises(RepairScopeViolation, match="only by case or Unicode alias"):
+        validate_repair_scope(request, (changed_path,))
+
+
+def test_allowed_scope_rejects_nfd_alias_but_accepts_exact_unicode_spelling() -> None:
+    request = replace(
+        _request(),
+        allowed_paths=("src/café",),
+        forbidden_paths=(),
+    )
+    validate_repair_scope(request, ("src/café/module.py",))
+    with pytest.raises(RepairScopeViolation, match="only by case or Unicode alias"):
+        validate_repair_scope(request, ("src/cafe\u0301/module.py",))

@@ -15,6 +15,7 @@ from seed.app.providers.contracts import (
 )
 from seed.app.providers.freshness import (
     FreshnessPolicy,
+    ObservationEvaluation,
     ObservationStatus,
     ProviderInvalidation,
     ProviderInvalidationKind,
@@ -397,3 +398,35 @@ def test_nfc_equivalent_provider_identity_has_one_runtime_interpretation() -> No
 def test_freshness_policy_rejects_fact_names_colliding_after_nfc() -> None:
     with pytest.raises(ValueError, match="unique"):
         FreshnessPolicy(600, ("café", "cafe\u0301"))
+
+
+def test_blocking_required_fact_is_not_a_satisfied_provider_fact() -> None:
+    observation = _observation(
+        observation_id="obs-blocking",
+        stage=ProviderCheckStage.ASSIGNMENT,
+        observed_at="2026-09-16T10:00:00Z",
+        facts=(_fact("authenticated", FactAssessment.BLOCKING),),
+    )
+    result = evaluate_observation(
+        observation,
+        expected_route=_route(),
+        required_stage=ProviderCheckStage.ASSIGNMENT,
+        now="2026-09-16T10:00:30Z",
+        policy=FreshnessPolicy(
+            max_age_seconds=600,
+            required_fact_names=("authenticated",),
+        ),
+    )
+    assert result.status is ObservationStatus.FRESH
+    assert observation.facts[0].assessment is FactAssessment.BLOCKING
+    assert observation.facts[0].assessment is not FactAssessment.SATISFIED
+
+
+def test_observation_evaluation_rejects_mutable_provenance() -> None:
+    with pytest.raises(ValueError, match="provenance_refs"):
+        ObservationEvaluation(
+            ObservationStatus.FRESH,
+            "OBSERVATION_FRESH",
+            "obs-1",
+            ["source:one"],  # type: ignore[arg-type]
+        )

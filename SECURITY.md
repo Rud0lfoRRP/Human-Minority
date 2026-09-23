@@ -1,4 +1,4 @@
-# Security Policy — Early Source Drop Draft
+# Security Policy — Early Source Drop
 
 ## Status
 

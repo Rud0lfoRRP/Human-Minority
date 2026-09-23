@@ -124,17 +124,24 @@ def decide_repair(
 def validate_repair_scope(request: RepairRequest, changed_paths: tuple[str, ...]) -> None:
     """Fail closed if a produced candidate escapes the request's path envelope."""
 
-    allowed = tuple(portable_key(path) for path in request.allowed_paths)
+    allowed_exact = tuple(normalize_repo_path(path) for path in request.allowed_paths)
+    allowed_portable = tuple(portable_key(path) for path in allowed_exact)
     forbidden = tuple(portable_key(path) for path in request.forbidden_paths)
     for raw_path in changed_paths:
         try:
-            path = portable_key(normalize_repo_path(raw_path))
+            exact_path = normalize_repo_path(raw_path)
+            portable_path = portable_key(exact_path)
         except (ValueError, CommandError) as error:
             raise RepairScopeViolation("changed path is not a portable repository path") from error
-        if any(_within(path, boundary) for boundary in forbidden):
+        if any(_within(portable_path, boundary) for boundary in forbidden):
             raise RepairScopeViolation("changed path intersects forbidden scope")
-        if not any(_within(path, boundary) for boundary in allowed):
-            raise RepairScopeViolation("changed path is outside allowed scope")
+        if any(_within(exact_path, boundary) for boundary in allowed_exact):
+            continue
+        if any(_within(portable_path, boundary) for boundary in allowed_portable):
+            raise RepairScopeViolation(
+                "changed path matches allowed scope only by case or Unicode alias"
+            )
+        raise RepairScopeViolation("changed path is outside allowed scope")
 
 
 def append_attempt(

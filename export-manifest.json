@@ -1,6 +1,6 @@
 {
   "artifact_stage": "EARLY_SOURCE_DROP",
-  "boundary_document": "PUBLIC_EARLY_SOURCE_BOUNDARY_V2",
+  "boundary_document": "PUBLIC_BOUNDARY.md",
   "files": [
     {
       "kind": "metadata",
@@ -54,8 +54,15 @@
     {
       "kind": "metadata",
       "mode": "100644",
+      "public_path": ".gitignore",
+      "public_sha256": "81267b1cebddecaee98bac7109b8932122e00d00fc3c3041b9342650172fadee",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
       "public_path": "CONTRIBUTING.md",
-      "public_sha256": "19af15764de8f970cc13b50c5d4ae6531a2d7533b4425dab8e97762226728221",
+      "public_sha256": "deffb46a66784933dbd685b07175fa3794f8576effa63c810430d41fa9372628",
       "transformation": "NONE"
     },
     {
@@ -68,15 +75,22 @@
     {
       "kind": "metadata",
       "mode": "100644",
+      "public_path": "PUBLIC_BOUNDARY.md",
+      "public_sha256": "b80914fdb9cf90cfab8f4f373c76da45a45e92e54f7794b53d3f2282591f9d52",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
       "public_path": "README.md",
-      "public_sha256": "5c37c626d2cba4aac38bfb7629f0d4c6b8cfe74c938ebe3aa607a6984dd92f9f",
+      "public_sha256": "697e0a438a45f00e0c084e966cdf6ba7bdc1cf7dfe7494af44bacb39bfc24728",
       "transformation": "NONE"
     },
     {
       "kind": "metadata",
       "mode": "100644",
       "public_path": "SECURITY.md",
-      "public_sha256": "fea7e902f943f90e5a2b8b2158a7f748207dc01618590d63c66197cddbedc862",
+      "public_sha256": "9d57f10a518ce777ce3049924245f5d41b233bd0a051f2d36dc3cd4a2d5b9472",
       "transformation": "NONE"
     },
     {
@@ -160,7 +174,7 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/providers/freshness.py",
-      "public_sha256": "b1bcb642385beedf584886acfe309c92ad43aaea8f5ac3c27a373d30033a16aa",
+      "public_sha256": "1980a5f3f7b5725da4c68bc69ccdae6e7e32402af68fd71df9e0dabe7afdc27c",
       "transformation": "NONE"
     },
     {
@@ -181,7 +195,7 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/repair/policy.py",
-      "public_sha256": "0d5ea4b5a76d7ce904474dc003cc0ab4b81c193a1c4a90ec9b90e0add569a982",
+      "public_sha256": "daaa885b0c2df5529c86bd69eb85c5f1230869080220f9396e4bbd705dc65051",
       "transformation": "PUBLIC_TEXT_SCRUB_V1"
     },
     {
@@ -195,7 +209,7 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/source/contracts.py",
-      "public_sha256": "59868d6876803f0f38b8c3e3526bd046df9ed15764a6dd2876bfd92b86cd4bfb",
+      "public_sha256": "b26b4b74df70449fa019030e543aea0de8b80958624c0e0d96409951d3184ff1",
       "transformation": "NONE"
     },
     {
@@ -216,14 +230,14 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/verification/claims.py",
-      "public_sha256": "129a165bb84298fa9701f8eae28c8a2055aa3466ef189878ad23b1dfcc1f1071",
+      "public_sha256": "0894cc7b8319531b3306e5da17a24a186de4bc1fbf7abea6a93d8479d3348e19",
       "transformation": "NONE"
     },
     {
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_contracts_and_paths.py",
-      "public_sha256": "9247d65229ed3df6d529f0cc9ece3d2e14186b7cbed8340495b3ad8877b3ef20",
+      "public_sha256": "3ede0a826db7dcc175368e909aeab4a982072d77162c9dac91160439b0ba414b",
       "transformation": "NONE"
     },
     {
@@ -237,7 +251,7 @@
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_provider_contracts.py",
-      "public_sha256": "ff6ebf5686adcccdf0599a40d4c4d20bf31b4ec985deb7e4bb535235313a3db3",
+      "public_sha256": "c8bea7cf916306c0a5d7f0812d9e4eb95d084fbba63231c252f3e449231b28e4",
       "transformation": "NONE"
     },
     {
@@ -251,14 +265,14 @@
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_repair_policy.py",
-      "public_sha256": "921e30592e531ab0f701dad1b1ee043542f94c7608fab72e4d8389bd0c70c98f",
+      "public_sha256": "f009a8fa14303a6f761ebe0f9eae1c88b5afbe511ca37e03ac73f4ff6989dca3",
       "transformation": "NONE"
     },
     {
       "kind": "test",
       "mode": "100644",
       "public_path": "tools/verify_public_artifact.py",
-      "public_sha256": "65d958ad2ca7cc3305c5817e15c4e27c97acf8d6f335a6cb647660be2c538189",
+      "public_sha256": "428b1d56f58d5c245d7999e9b016a5ad74408bace7ced9dc6620161f9fcdbed3",
       "transformation": "NONE"
     }
   ],

@@ -252,25 +252,43 @@ def test_verification_result_requires_typed_status() -> None:
         )
 
 
-def test_materialized_source_rejects_mutable_entries() -> None:
-    identity = SourceIdentity(
-        adapter_id="git-v1",
-        source_locator="repo",
-        revision="a" * 40,
-        snapshot_id="snapshot-1",
-    )
-    entry = SourceEntry(
-        path="src/main.py",
-        kind=SourceEntryKind.REGULAR_FILE,
-        support=SourceSupport.SUPPORTED,
-        object_ref="blob:" + "b" * 40,
-        content_sha256="c" * 64,
-        size_bytes=12,
-    )
-    with pytest.raises(ValueError, match="tuple of SourceEntry"):
-        MaterializedSource(identity=identity, entries=[entry])  # type: ignore[arg-type]
-
-
 def test_windows_short_name_alias_shape_is_not_portable() -> None:
     with pytest.raises(CommandError):
         canonical_path("src/SECRET~1.JSO")
+
+
+def test_claim_evidence_and_source_contracts_reject_mutable_or_malformed_fields() -> None:
+    with pytest.raises(ValueError, match="claim_id"):
+        CandidateClaim([], "assertion", "artifact:raw")  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="origin_context"):
+        Evidence("evidence-1", "artifact", "artifact:one", [])  # type: ignore[arg-type]
+
+    with pytest.raises(ValueError, match="adapter_id"):
+        SourceIdentity([], "repo", "revision", "snapshot")  # type: ignore[arg-type]
+    with pytest.raises(ValueError, match="SourceEntryKind"):
+        SourceEntry(
+            "src/main.py",
+            "REGULAR_FILE",  # type: ignore[arg-type]
+            SourceSupport.SUPPORTED,
+            "blob:one",
+            "c" * 64,
+            1,
+        )
+    with pytest.raises(ValueError, match="lowercase SHA-256"):
+        SourceEntry(
+            "src/main.py",
+            SourceEntryKind.REGULAR_FILE,
+            SourceSupport.SUPPORTED,
+            "blob:one",
+            "not-a-digest",
+            1,
+        )
+    with pytest.raises(ValueError, match="non-negative"):
+        SourceEntry(
+            "src/main.py",
+            SourceEntryKind.REGULAR_FILE,
+            SourceSupport.SUPPORTED,
+            "blob:one",
+            "c" * 64,
+            -1,
+        )

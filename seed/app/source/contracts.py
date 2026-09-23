@@ -33,6 +33,20 @@ class SourceSupport(Enum):
     UNKNOWN = "UNKNOWN"
 
 
+def _require_text(value: object, name: str) -> None:
+    if type(value) is not str or not value:
+        raise ValueError(f"{name} must be a non-empty plain string")
+
+
+def _require_sha256(value: object, name: str) -> None:
+    if (
+        type(value) is not str
+        or len(value) != 64
+        or any(character not in "0123456789abcdef" for character in value)
+    ):
+        raise ValueError(f"{name} must be a lowercase SHA-256 hex digest")
+
+
 @dataclass(frozen=True)
 class SourceIdentity:
     adapter_id: str
@@ -40,6 +54,16 @@ class SourceIdentity:
     revision: str
     snapshot_id: str
     contract_version: str = SOURCE_ADAPTER_CONTRACT_VERSION
+
+    def __post_init__(self) -> None:
+        for field_name in (
+            "adapter_id",
+            "source_locator",
+            "revision",
+            "snapshot_id",
+            "contract_version",
+        ):
+            _require_text(getattr(self, field_name), field_name)
 
 
 @dataclass(frozen=True)
@@ -50,6 +74,20 @@ class SourceEntry:
     object_ref: str
     content_sha256: str | None
     size_bytes: int | None
+
+    def __post_init__(self) -> None:
+        _require_text(self.path, "path")
+        if not isinstance(self.kind, SourceEntryKind):
+            raise ValueError("kind must be a SourceEntryKind")
+        if not isinstance(self.support, SourceSupport):
+            raise ValueError("support must be a SourceSupport")
+        _require_text(self.object_ref, "object_ref")
+        if self.content_sha256 is not None:
+            _require_sha256(self.content_sha256, "content_sha256")
+        if self.size_bytes is not None and (
+            type(self.size_bytes) is not int or self.size_bytes < 0
+        ):
+            raise ValueError("size_bytes must be a non-negative integer or None")
 
 
 @dataclass(frozen=True)

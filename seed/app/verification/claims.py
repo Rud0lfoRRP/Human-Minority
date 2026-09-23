@@ -24,6 +24,10 @@ class CandidateClaim:
     assertion: str
     raw_artifact_ref: str
 
+    def __post_init__(self) -> None:
+        for field_name in ("claim_id", "assertion", "raw_artifact_ref"):
+            _require_text(getattr(self, field_name), field_name)
+
 
 @dataclass(frozen=True)
 class Evidence:
@@ -31,6 +35,12 @@ class Evidence:
     kind: str
     artifact_ref: str
     origin_context: str | None = None
+
+    def __post_init__(self) -> None:
+        for field_name in ("evidence_id", "kind", "artifact_ref"):
+            _require_text(getattr(self, field_name), field_name)
+        if self.origin_context is not None:
+            _require_text(self.origin_context, "origin_context")
 
 
 def _require_text(value: object, name: str) -> None:
