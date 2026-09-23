@@ -5,12 +5,34 @@
 > **Claim is not proof.**
 
 [![Public CI](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-ci.yml/badge.svg)](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-ci.yml)
-[![CodeQL](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-codeql.yml/badge.svg)](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-codeql.yml)
 [![Public Integrity](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-integrity.yml/badge.svg)](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-integrity.yml)
+[![CodeQL](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-codeql.yml/badge.svg)](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-codeql.yml)
+[![OpenSSF Scorecard](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-scorecard.yml/badge.svg)](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-scorecard.yml)
+[![License: PolyForm Perimeter 1.0.1](https://img.shields.io/badge/license-PolyForm%20Perimeter%201.0.1-informational)](LICENSE)
 
-Human Minority is a **source-available verification and policy-enforcement layer for software work produced by AI agents**.
+Human Minority is a **verification and policy-enforcement layer for AI coding agents**.
+
+A coding agent can say *"tests passed"* or *"ready to merge."* Human Minority asks a different set of questions: **which exact candidate, which evidence, which verifier, and who still has authority to accept it?**
 
 It separates what an agent *claims* from what an independent verifier can *prove*. Candidate identity, evidence, verification, bounded repair and final integration remain distinct steps, with acceptance authority kept outside the agent that produced the work.
+
+### The idea in 15 seconds
+
+Conceptually, a failed claim should look like this:
+
+```text
+Agent claim: "Tests passed. Ready to merge."
+
+Human Minority:
+candidate       BOUND
+evidence        PRESENT
+verification    FAILED
+
+decision:       REJECT
+next step:      bounded repair -> re-verification
+```
+
+That block illustrates the control model; it is **not CLI output** from the current source drop.
 
 **Status:** Early Source Drop — inspectable public primitives are available today; the complete `hmin` runtime/CLI is not yet published.
 
@@ -114,11 +136,13 @@ This repository is an **Early Source Drop**: a deliberately small, inspectable s
 It is **not**:
 
 - the complete Human Minority product;
-- a supported production release;
+- a production-ready release with compatibility or support guarantees;
 - proof that untrusted repository code can already be executed safely on every platform;
 - the private provider/runtime/orchestration stack;
 - private self-improvement or internal orchestration machinery;
 - a hosted AI service with bundled inference credits.
+
+Public API, CLI and runtime interfaces may still change and are not yet covered by compatibility or support guarantees.
 
 Do not infer security guarantees from design intent. Only guarantees explicitly supported by the code and documented execution profile of a released artifact apply.
 
@@ -178,6 +202,6 @@ See `CONTRIBUTING.md` for the current contribution boundary.
 
 ## Status
 
-**Early development · Early Source Drop · Not a supported release**
+**Early development · Early Source Drop**
 
 The private canonical upstream remains separate. Public artifacts are produced through a controlled export with fresh public history rather than by exposing private Git history.
