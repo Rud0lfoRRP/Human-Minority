@@ -97,6 +97,11 @@ def decide_repair(
     else:
         if route.substituted_from != request.executor:
             return _decision(RepairAction.ESCALATE_POLICY, "substitution origin does not match")
+        if route.profile != request.profile and not route.substitution_approved:
+            return _decision(
+                RepairAction.REQUIRE_OWNER_APPROVAL,
+                "substitution profile change requires explicit approval",
+            )
         if not (route.substitution_approved or policy.allow_automatic_substitution):
             return _decision(RepairAction.REQUIRE_OWNER_APPROVAL, "substitution is not authorized")
     if progress.consecutive_no_progress >= policy.no_progress_limit:

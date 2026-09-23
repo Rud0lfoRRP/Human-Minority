@@ -79,9 +79,13 @@ and must fail closed when a required verification or confinement boundary cannot
 
 ## Requirements
 
-This Early Source Drop is tested against **Python 3.12–3.14**. The exported runtime modules use only the Python standard library; `pytest` is needed only for the test suite.
+The declared compatibility target for this Early Source Drop is **Python 3.12–3.14**. Pre-public verification currently covers Python 3.12 and 3.14; Python 3.13 and macOS remain unverified until public CI runs. The exported runtime modules use only the Python standard library; `pytest` is needed only for the test suite.
 
 Run examples from the repository root so the exported `seed.app` namespace is importable.
+
+The shipped canonical JSON format is the project-specific `seed-canonical-json-v1` contract. It does **not** claim RFC 8785 / JCS compatibility. The 8 MiB limit applies to parsing untrusted JSON bytes; canonical serialization and hashing are not capped by that parser-input limit, so large in-memory manifests can still be hashed.
+
+Portable path collision checks are intentionally conservative across supported host filesystems. They may reject some names that a particular filesystem would keep distinct; that is a fail-closed portability tradeoff, not a claim of byte-for-byte filesystem name equivalence.
 
 ## Quick example
 

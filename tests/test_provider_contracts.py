@@ -83,13 +83,14 @@ def test_credential_reference_is_a_stable_lookup_identity_not_secret_material() 
     assert "SEED_TEST_TOKEN" in first.persistent_material()["binding_id"]
 
 
-def test_malformed_credential_reference_integrity_fails_closed() -> None:
+def test_malformed_credential_reference_is_rejected_at_construction() -> None:
     credential = CredentialReference.create(
         provider_id="provider-a",
         backend=CredentialBackendKind.ENVIRONMENT,
         binding_id="env:SEED_TEST_TOKEN",
     )
-    assert replace(credential, binding_id="env:\ud800").integrity_valid() is False
+    with pytest.raises(ValueError, match="Unicode scalar"):
+        replace(credential, binding_id="env:\ud800")
 
 
 def test_credential_reference_rejects_secret_like_binding_material() -> None:
@@ -122,7 +123,7 @@ def test_noncanonical_observation_material_is_integrity_invalid() -> None:
         observed_at="2026-09-16T10:00:00Z",
         facts=(_fact("authenticated"),),
     )
-    malformed = replace(observation, source_ref="source:\ud800")
+    malformed = replace(observation, source_ref="source:tampered")
     assert malformed.integrity_valid() is False
 
     result = evaluate_observation(
@@ -319,3 +320,80 @@ def test_two_stage_provider_state_requires_assignment_then_predispatch() -> None
     )
     assert result.status is ObservationStatus.FRESH
     assert result.reason_code == "ASSIGNMENT_AND_PREDISPATCH_FRESH"
+
+
+def test_direct_credential_constructor_cannot_bypass_validation() -> None:
+    with pytest.raises(ValueError, match="lookup reference, not secret material"):
+        CredentialReference(
+            reference_id="credential:" + "0" * 32,
+            provider_id="provider-a",
+            backend=CredentialBackendKind.EXTERNAL_SECRET_PROVIDER,
+            binding_id="external:password=hunter2",
+            account_ref=None,
+            project_ref=None,
+            workspace_ref=None,
+            reference_version=None,
+        )
+
+
+def test_direct_observation_constructor_rejects_duplicate_facts_and_bad_time() -> None:
+    duplicate_facts = (
+        _fact("availability", FactAssessment.UNKNOWN),
+        _fact("availability", FactAssessment.SATISFIED),
+    )
+    with pytest.raises(ValueError, match="fact names must be unique"):
+        LiveProviderObservation(
+            "obs-direct",
+            _route(),
+            ProviderCheckStage.ASSIGNMENT,
+            "2026-09-16T10:00:00Z",
+            None,
+            "source:direct",
+            duplicate_facts,
+            "fingerprint:placeholder",
+        )
+    with pytest.raises(ValueError, match="ISO-8601"):
+        LiveProviderObservation(
+            "obs-direct",
+            _route(),
+            ProviderCheckStage.ASSIGNMENT,
+            "not-a-time",
+            None,
+            "source:direct",
+            (),
+            "fingerprint:placeholder",
+        )
+
+
+def test_nfc_equivalent_provider_identity_has_one_runtime_interpretation() -> None:
+    nfc_route = ProviderRouteScope(
+        "providér", "model-café", "profile-é", None, None, None, None, None, None,
+    )
+    nfd_route = ProviderRouteScope(
+        "provide\u0301r", "model-cafe\u0301", "profile-e\u0301",
+        None, None, None, None, None, None,
+    )
+    observation = LiveProviderObservation.create(
+        observation_id="obs-nfc",
+        route=nfd_route,
+        stage=ProviderCheckStage.ASSIGNMENT,
+        observed_at="2026-09-16T10:00:00Z",
+        valid_until=None,
+        source_ref="source:nfc",
+        facts=(_fact("cafe\u0301"),),
+    )
+    result = evaluate_observation(
+        observation,
+        expected_route=nfc_route,
+        required_stage=ProviderCheckStage.ASSIGNMENT,
+        now="2026-09-16T10:00:30Z",
+        policy=FreshnessPolicy(600, ("café",)),
+    )
+    assert observation.route == nfc_route
+    assert observation.facts[0].fact_name == "café"
+    assert result.status is ObservationStatus.FRESH
+
+
+def test_freshness_policy_rejects_fact_names_colliding_after_nfc() -> None:
+    with pytest.raises(ValueError, match="unique"):
+        FreshnessPolicy(600, ("café", "cafe\u0301"))

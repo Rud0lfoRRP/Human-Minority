@@ -13,7 +13,7 @@
       "kind": "metadata",
       "mode": "100644",
       "public_path": ".github/dependabot.yml",
-      "public_sha256": "8bdfee64aa42141e52b00ecf4be482d6f56bb450fb48eacd449793d5d1ff4549",
+      "public_sha256": "49872dd06efc0c8851cb29794e9db7e6db8fdf0ea7e81e8e1a3989fbb1337747",
       "transformation": "NONE"
     },
     {
@@ -69,7 +69,7 @@
       "kind": "metadata",
       "mode": "100644",
       "public_path": "README.md",
-      "public_sha256": "79b350e5b6e59f965148f30ffd008036046da53d4be1967f10b5a90a16ef4f21",
+      "public_sha256": "5c37c626d2cba4aac38bfb7629f0d4c6b8cfe74c938ebe3aa607a6984dd92f9f",
       "transformation": "NONE"
     },
     {
@@ -92,6 +92,13 @@
       "public_path": "requirements-test.txt",
       "public_sha256": "93c4ab5f175d24229e46ec70a8ecaeb6db8b36e3f54d8005808044c060acbc92",
       "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/__init__.py",
+      "public_sha256": "1a2c9ae987b5afe4392693fdee9600f22605e76e0c5c9a18d55acec41a160966",
+      "transformation": "CURATED_INITIALIZER_V2"
     },
     {
       "kind": "runtime",
@@ -139,7 +146,7 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/providers/contracts.py",
-      "public_sha256": "a9078d9a490ba3f72882013919b5a6622141f9d8f7bf06783e10ca51e94e4cf6",
+      "public_sha256": "4194c6447320ebf31e0f6da95b2ce97210a51c176884c6f7ce2e0f0dd07371e6",
       "transformation": "PUBLIC_TEXT_SCRUB_V1"
     },
     {
@@ -153,7 +160,7 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/providers/freshness.py",
-      "public_sha256": "0fd9de5cccd13d2093d78f20be7fdf3aecce0ff9a1aaa1d975ec50049c96340e",
+      "public_sha256": "b1bcb642385beedf584886acfe309c92ad43aaea8f5ac3c27a373d30033a16aa",
       "transformation": "NONE"
     },
     {
@@ -174,7 +181,7 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/repair/policy.py",
-      "public_sha256": "cd1cff8dba6e64d88f9982307ff5bf95e4362faa1192ff379b813ae31db54daf",
+      "public_sha256": "0d5ea4b5a76d7ce904474dc003cc0ab4b81c193a1c4a90ec9b90e0add569a982",
       "transformation": "PUBLIC_TEXT_SCRUB_V1"
     },
     {
@@ -188,14 +195,14 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/source/contracts.py",
-      "public_sha256": "208c4777fef7e98202d2f79198ec412dadc048af124adfee566e0ba102fdeafb",
+      "public_sha256": "59868d6876803f0f38b8c3e3526bd046df9ed15764a6dd2876bfd92b86cd4bfb",
       "transformation": "NONE"
     },
     {
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/source/portable_paths.py",
-      "public_sha256": "8448f18aca31df6e1173d26faa6c6c359d8585855e0ad37a5b63554514d701a8",
+      "public_sha256": "eeedb5be66daf492fa44597098e5efe557580eccaf373f5f9c92cde18d319422",
       "transformation": "NONE"
     },
     {
@@ -209,42 +216,42 @@
       "kind": "runtime",
       "mode": "100644",
       "public_path": "seed/app/verification/claims.py",
-      "public_sha256": "1bd1675d06789fefc0b874cd9f2fc8631896a9a421728986128f67dd70bc6707",
+      "public_sha256": "129a165bb84298fa9701f8eae28c8a2055aa3466ef189878ad23b1dfcc1f1071",
       "transformation": "NONE"
     },
     {
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_contracts_and_paths.py",
-      "public_sha256": "23855c5cc2da4979468fe60576d2da90eb97a528b2f135e2348da05ce710703b",
+      "public_sha256": "9247d65229ed3df6d529f0cc9ece3d2e14186b7cbed8340495b3ad8877b3ef20",
       "transformation": "NONE"
     },
     {
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_core_primitives.py",
-      "public_sha256": "58d6af8fb5ecb999b198d3511b58fedc04914f690a2db445e62b77fe00de0f79",
+      "public_sha256": "3af8b82dbbbdb42f6fad88bccf15c45651f830aa0b246c390da58a50bd4cf20e",
       "transformation": "NONE"
     },
     {
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_provider_contracts.py",
-      "public_sha256": "1450121e3a6f9366373d92001d64e350185dbc59d34fdb97cff77c2861c3c18d",
+      "public_sha256": "ff6ebf5686adcccdf0599a40d4c4d20bf31b4ec985deb7e4bb535235313a3db3",
       "transformation": "NONE"
     },
     {
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_public_boundary.py",
-      "public_sha256": "493a3cc08b57d84fdc72fb61f03088c005a5c5e30ebe2ddcc1f038a0ea0cb43e",
+      "public_sha256": "09a70614dea38a4f19ae96e52ba0a57390de75571ab9f9f71439482dcb0c9c11",
       "transformation": "NONE"
     },
     {
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_repair_policy.py",
-      "public_sha256": "58441bff1f87b5491703be2086f6e02cb1a7f97177ba9a7d04ffacf6c6718b30",
+      "public_sha256": "921e30592e531ab0f701dad1b1ee043542f94c7608fab72e4d8389bd0c70c98f",
       "transformation": "NONE"
     },
     {

@@ -10,6 +10,7 @@ from seed.app.core.errors import CommandError, CoreErrorCode
 
 
 _WINDOWS_INVALID = set('<>:"|?*')
+_WINDOWS_SHORT_ALIAS = re.compile(r"^[^.]+~[0-9]+(?:\.[^.]*)?$", re.IGNORECASE)
 _RESERVED = (
     {"CON", "PRN", "AUX", "NUL"}
     | {f"{prefix}{number}" for prefix in ("COM", "LPT") for number in range(1, 10)}
@@ -47,6 +48,7 @@ def canonical_path(value: Any) -> str:
             segment.endswith((".", " "))
             or any(ord(character) < 32 or ord(character) == 127 for character in segment)
             or any(character in _WINDOWS_INVALID for character in segment)
+            or _WINDOWS_SHORT_ALIAS.fullmatch(segment) is not None
             or segment.split(".", 1)[0].casefold().upper() in _RESERVED
         ):
             raise _admission("manifest path violates seed-portable-path-v1")

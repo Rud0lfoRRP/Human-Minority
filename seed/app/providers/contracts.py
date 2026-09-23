@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
@@ -23,7 +24,12 @@ _SECRET_MARKERS = ("sk-", "bearer ", "api_key=", "token=", "password=")
 def _text(value: object, name: str) -> str:
     if type(value) is not str or not value:
         raise ValueError(f"{name} must be a non-empty plain string")
-    return value
+    normalized = unicodedata.normalize("NFC", value)
+    try:
+        normalized.encode("utf-8", errors="strict")
+    except UnicodeEncodeError as exc:
+        raise ValueError(f"{name} must contain valid Unicode scalar values") from exc
+    return normalized
 
 
 def _optional_text(value: object, name: str) -> str | None:
@@ -81,6 +87,21 @@ class CredentialReference:
     workspace_ref: str | None
     reference_version: str | None
 
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "reference_id", _text(self.reference_id, "reference_id"))
+        object.__setattr__(self, "provider_id", _text(self.provider_id, "provider_id"))
+        if not isinstance(self.backend, CredentialBackendKind):
+            raise ValueError("backend must be a CredentialBackendKind")
+        binding_id = _text(self.binding_id, "binding_id")
+        object.__setattr__(self, "binding_id", binding_id)
+        lowered = binding_id.casefold()
+        if any(marker in lowered for marker in _SECRET_MARKERS):
+            raise ValueError("binding_id must be a lookup reference, not secret material")
+        if _BINDING_PATTERNS[self.backend.value].fullmatch(binding_id) is None:
+            raise ValueError("binding_id does not match its credential backend")
+        for name in ("account_ref", "project_ref", "workspace_ref", "reference_version"):
+            object.__setattr__(self, name, _optional_text(getattr(self, name), name))
+
     @classmethod
     def create(
         cls,
@@ -93,22 +114,19 @@ class CredentialReference:
         workspace_ref: str | None = None,
         reference_version: str | None = None,
     ) -> "CredentialReference":
-        _text(provider_id, "provider_id")
+        provider_id = _text(provider_id, "provider_id")
         if not isinstance(backend, CredentialBackendKind):
             raise ValueError("backend must be a CredentialBackendKind")
-        _text(binding_id, "binding_id")
+        binding_id = _text(binding_id, "binding_id")
         lowered = binding_id.casefold()
         if any(marker in lowered for marker in _SECRET_MARKERS):
             raise ValueError("binding_id must be a lookup reference, not secret material")
         if _BINDING_PATTERNS[backend.value].fullmatch(binding_id) is None:
             raise ValueError("binding_id does not match its credential backend")
-        for name, value in (
-            ("account_ref", account_ref),
-            ("project_ref", project_ref),
-            ("workspace_ref", workspace_ref),
-            ("reference_version", reference_version),
-        ):
-            _optional_text(value, name)
+        account_ref = _optional_text(account_ref, "account_ref")
+        project_ref = _optional_text(project_ref, "project_ref")
+        workspace_ref = _optional_text(workspace_ref, "workspace_ref")
+        reference_version = _optional_text(reference_version, "reference_version")
         material = {
             "provider_id": provider_id,
             "backend": backend.value,
@@ -164,12 +182,12 @@ class ProviderRouteScope:
 
     def __post_init__(self) -> None:
         for name in ("provider_id", "model_identifier", "profile_id"):
-            _text(getattr(self, name), name)
+            object.__setattr__(self, name, _text(getattr(self, name), name))
         for name in (
             "account_ref", "project_ref", "workspace_ref", "organization_ref",
             "region_ref", "credential_reference_id",
         ):
-            _optional_text(getattr(self, name), name)
+            object.__setattr__(self, name, _optional_text(getattr(self, name), name))
 
     def material(self) -> dict[str, str | None]:
         return {
@@ -190,7 +208,7 @@ class ProviderProfileIdentity:
 
     def __post_init__(self) -> None:
         for name in ("provider_id", "model_identifier", "profile_id"):
-            _text(getattr(self, name), name)
+            object.__setattr__(self, name, _text(getattr(self, name), name))
 
     def material(self) -> dict[str, str]:
         return {
@@ -208,7 +226,7 @@ class ProviderLimitScope:
     def __post_init__(self) -> None:
         if not isinstance(self.kind, ProviderLimitScopeKind):
             raise ValueError("limit scope kind must be ProviderLimitScopeKind")
-        _text(self.reference, "limit scope reference")
+        object.__setattr__(self, "reference", _text(self.reference, "limit scope reference"))
 
     def material(self) -> dict[str, str]:
         return {"kind": self.kind.value, "reference": self.reference}
@@ -223,7 +241,7 @@ class DeclaredProviderLimit:
 
     def __post_init__(self) -> None:
         for field in ("name", "value", "provenance_ref"):
-            _text(getattr(self, field), field)
+            object.__setattr__(self, field, _text(getattr(self, field), field))
         if not isinstance(self.scope, ProviderLimitScope):
             raise ValueError("scope must be a ProviderLimitScope")
 
@@ -249,7 +267,7 @@ class ProviderModelProfile:
         names = tuple(limit.name for limit in self.declared_limits)
         if len(names) != len(set(names)):
             raise ValueError("declared provider limit names must be unique")
-        _text(self.provenance_ref, "provenance_ref")
+        object.__setattr__(self, "provenance_ref", _text(self.provenance_ref, "provenance_ref"))
 
 
 @dataclass(frozen=True)
@@ -260,10 +278,10 @@ class ProviderFact:
     enforced_scope: ProviderLimitScope | None = None
 
     def __post_init__(self) -> None:
-        _text(self.fact_name, "fact_name")
+        object.__setattr__(self, "fact_name", _text(self.fact_name, "fact_name"))
         if not isinstance(self.assessment, FactAssessment):
             raise ValueError("assessment must be FactAssessment")
-        _text(self.provenance_ref, "provenance_ref")
+        object.__setattr__(self, "provenance_ref", _text(self.provenance_ref, "provenance_ref"))
         if self.enforced_scope is not None and not isinstance(
             self.enforced_scope, ProviderLimitScope
         ):
@@ -290,6 +308,30 @@ class LiveProviderObservation:
     source_ref: str
     facts: tuple[ProviderFact, ...]
     observation_fingerprint: str
+
+    def __post_init__(self) -> None:
+        for name in ("observation_id", "observed_at", "source_ref", "observation_fingerprint"):
+            object.__setattr__(self, name, _text(getattr(self, name), name))
+        object.__setattr__(self, "valid_until", _optional_text(self.valid_until, "valid_until"))
+        if not isinstance(self.route, ProviderRouteScope):
+            raise ValueError("route must be ProviderRouteScope")
+        if not isinstance(self.stage, ProviderCheckStage):
+            raise ValueError("stage must be ProviderCheckStage")
+        observed_instant = _instant(self.observed_at)
+        if self.valid_until is not None and _instant(self.valid_until) < observed_instant:
+            raise ValueError("valid_until cannot precede observed_at")
+        if type(self.facts) is not tuple or any(
+            not isinstance(fact, ProviderFact) for fact in self.facts
+        ):
+            raise ValueError("facts must be ProviderFact values")
+        names = tuple(fact.fact_name for fact in self.facts)
+        if len(names) != len(set(names)):
+            raise ValueError("provider fact names must be unique")
+        object.__setattr__(
+            self,
+            "facts",
+            tuple(sorted(self.facts, key=lambda fact: fact.fact_name)),
+        )
 
     def _material(self) -> dict[str, object]:
         return {
@@ -320,14 +362,12 @@ class LiveProviderObservation:
         source_ref: str,
         facts: tuple[ProviderFact, ...],
     ) -> "LiveProviderObservation":
-        for name, value in (
-            ("observation_id", observation_id), ("observed_at", observed_at),
-            ("source_ref", source_ref),
-        ):
-            _text(value, name)
-        _optional_text(valid_until, "valid_until")
-        observed_instant = _instant(observed_at)
-        if valid_until is not None and _instant(valid_until) < observed_instant:
+        normalized_observation_id = _text(observation_id, "observation_id")
+        normalized_observed_at = _text(observed_at, "observed_at")
+        normalized_valid_until = _optional_text(valid_until, "valid_until")
+        normalized_source_ref = _text(source_ref, "source_ref")
+        observed_instant = _instant(normalized_observed_at)
+        if normalized_valid_until is not None and _instant(normalized_valid_until) < observed_instant:
             raise ValueError("valid_until cannot precede observed_at")
         if not isinstance(route, ProviderRouteScope):
             raise ValueError("route must be ProviderRouteScope")
@@ -339,13 +379,24 @@ class LiveProviderObservation:
         if len(names) != len(set(names)):
             raise ValueError("provider fact names must be unique")
         ordered = tuple(sorted(facts, key=lambda fact: fact.fact_name))
-        observation = cls(
-            observation_id, route, stage, observed_at, valid_until, source_ref,
-            ordered, "",
-        )
+        material = {
+            "observation_id": normalized_observation_id,
+            "route": route.material(),
+            "stage": stage.value,
+            "observed_at": normalized_observed_at,
+            "valid_until": normalized_valid_until,
+            "source_ref": normalized_source_ref,
+            "facts": [fact.material() for fact in ordered],
+        }
         return cls(
-            observation_id, route, stage, observed_at, valid_until, source_ref,
-            ordered, canonical_sha256(observation._material()),
+            normalized_observation_id,
+            route,
+            stage,
+            normalized_observed_at,
+            normalized_valid_until,
+            normalized_source_ref,
+            ordered,
+            canonical_sha256(material),
         )
 
 

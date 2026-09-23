@@ -183,3 +183,11 @@ def test_verify_sha256_rejects_noncanonical_expected_digest(expected: str) -> No
     with pytest.raises(IntegrityError) as caught:
         verify_sha256(b"abc", expected)
     assert caught.value.code is CoreErrorCode.HASH_MISMATCH
+
+
+def test_canonical_serializer_can_exceed_untrusted_parser_byte_bound() -> None:
+    encoded = canonical_json_bytes("x" * MAX_INPUT_BYTES)
+    assert len(encoded) > MAX_INPUT_BYTES
+    with pytest.raises(CanonicalJsonError) as caught:
+        parse_json_bytes(encoded)
+    assert caught.value.code is CoreErrorCode.INPUT_SIZE_LIMIT_EXCEEDED

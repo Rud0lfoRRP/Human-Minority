@@ -338,3 +338,46 @@ def test_attempt_lineage_rejects_wrong_parent() -> None:
     )
     with pytest.raises(ValueError, match="parent candidate"):
         append_attempt((), record, request)
+
+
+def test_scope_rejects_windows_short_name_alias_shape() -> None:
+    request = _request(forbidden_paths=("src/secret_configuration.json",))
+    with pytest.raises(RepairScopeViolation, match="portable repository path"):
+        validate_repair_scope(request, ("src/SECRET~1.JSO",))
+
+
+def test_automatic_substitution_requires_explicit_approval_for_profile_change() -> None:
+    route = ExecutorRoute(
+        executor="agent-b",
+        provider="provider-b",
+        profile="totally-unbound-profile",
+        substituted_from="agent-a",
+        substitution_approved=False,
+    )
+    policy = replace(
+        _policy(),
+        allowed_executors=("agent-a", "agent-b"),
+        allowed_providers=("provider-a", "provider-b"),
+        allow_automatic_substitution=True,
+    )
+    blocked = decide_repair(
+        _request(),
+        policy=policy,
+        budget=_budget(),
+        progress=_progress(),
+        watchdog=_watchdog(),
+        route=route,
+        now=datetime(2029, 1, 1, tzinfo=timezone.utc),
+    )
+    assert blocked.action is RepairAction.REQUIRE_OWNER_APPROVAL
+
+    approved = decide_repair(
+        _request(),
+        policy=policy,
+        budget=_budget(),
+        progress=_progress(),
+        watchdog=_watchdog(),
+        route=replace(route, substitution_approved=True),
+        now=datetime(2029, 1, 1, tzinfo=timezone.utc),
+    )
+    assert approved.action is RepairAction.EXECUTE_REPAIR

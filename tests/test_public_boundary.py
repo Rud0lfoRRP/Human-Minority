@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from pathlib import Path
+
+import seed
 import seed.app.core as core_package
 import seed.app.core.hashing as hashing
 import seed.app.repair as repair_package
@@ -32,3 +35,8 @@ def test_curated_initializers_do_not_reexport_private_subsystems() -> None:
     assert not hasattr(source_package, "GitSourceAdapter")
     assert not hasattr(providers_package, "execute_wsl_run")
     assert not hasattr(verification_package, "execute_verification_plan")
+
+
+def test_seed_root_is_a_regular_package() -> None:
+    assert seed.__file__ is not None
+    assert Path(seed.__file__).name == "__init__.py"

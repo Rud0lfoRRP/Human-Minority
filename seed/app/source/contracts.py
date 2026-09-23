@@ -59,6 +59,14 @@ class MaterializedSource:
     identity: SourceIdentity
     entries: tuple[SourceEntry, ...]
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.identity, SourceIdentity):
+            raise ValueError("identity must be a SourceIdentity")
+        if type(self.entries) is not tuple or any(
+            not isinstance(entry, SourceEntry) for entry in self.entries
+        ):
+            raise ValueError("entries must be a tuple of SourceEntry values")
+
 
 class SourceAdapter(Protocol):
     """Port for exact-source identity, structural enumeration and verification."""

@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from enum import Enum
+import unicodedata
 
 from .contracts import (
     FactAssessment,
@@ -43,8 +44,17 @@ class FreshnessPolicy:
             type(name) is not str or not name for name in self.required_fact_names
         ):
             raise ValueError("required_fact_names must be plain non-empty strings")
-        if len(self.required_fact_names) != len(set(self.required_fact_names)):
+        normalized_names = tuple(
+            unicodedata.normalize("NFC", name) for name in self.required_fact_names
+        )
+        try:
+            for name in normalized_names:
+                name.encode("utf-8", errors="strict")
+        except UnicodeEncodeError as exc:
+            raise ValueError("required_fact_names must contain valid Unicode scalar values") from exc
+        if len(normalized_names) != len(set(normalized_names)):
             raise ValueError("required_fact_names must be unique")
+        object.__setattr__(self, "required_fact_names", normalized_names)
 
 
 @dataclass(frozen=True)
@@ -90,13 +100,25 @@ def evaluate_observation(
         return _result(observation, ObservationStatus.STALE, "ROUTE_SCOPE_MISMATCH")
     if observation.stage is not required_stage:
         return _result(observation, ObservationStatus.STALE, "CHECK_STAGE_MISMATCH")
-    observed = _instant(observation.observed_at)
+    try:
+        observed = _instant(observation.observed_at)
+        valid_until = (
+            _instant(observation.valid_until)
+            if observation.valid_until is not None
+            else None
+        )
+    except ValueError:
+        return _result(
+            observation,
+            ObservationStatus.INDETERMINATE,
+            "OBSERVATION_TIME_INVALID",
+        )
     current = _instant(now)
     if observed > current:
         return _result(observation, ObservationStatus.INDETERMINATE, "OBSERVATION_FROM_FUTURE")
     if (current - observed).total_seconds() > policy.max_age_seconds:
         return _result(observation, ObservationStatus.STALE, "EXPLICIT_MAX_AGE_EXCEEDED")
-    if observation.valid_until is not None and current > _instant(observation.valid_until):
+    if valid_until is not None and current > valid_until:
         return _result(observation, ObservationStatus.STALE, "PROVIDER_VALIDITY_EXPIRED")
     for invalidation in invalidations:
         occurred = _instant(invalidation.occurred_at)
