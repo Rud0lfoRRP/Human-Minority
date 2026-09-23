@@ -12,10 +12,13 @@ on:
 permissions:
   actions: read
   contents: read
-  security-events: write
 
 jobs:
   analyze:
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
     name: CodeQL / Python
     if: ${{ github.event.repository.private == false }}
     runs-on: ubuntu-latest
