@@ -10,7 +10,7 @@
 [![OpenSSF Scorecard](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-scorecard.yml/badge.svg)](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-scorecard.yml)
 [![License: PolyForm Perimeter 1.0.1](https://img.shields.io/badge/license-PolyForm%20Perimeter%201.0.1-informational)](LICENSE)
 
-Human Minority is a **verification and policy-enforcement layer for AI coding agents**.
+Human Minority is a **source-available verification and policy-enforcement layer for AI coding agents**.
 
 A coding agent can say *"tests passed"* or *"ready to merge."* Human Minority asks a different set of questions: **which exact candidate, which evidence, which verifier, and who still has authority to accept it?**
 
@@ -28,7 +28,7 @@ candidate       BOUND
 evidence        PRESENT
 verification    FAILED
 
-decision:       REJECT
+decision:       NEEDS_REPAIR
 next step:      bounded repair -> re-verification
 ```
 
