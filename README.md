@@ -32,9 +32,9 @@ decision:       NEEDS_REPAIR
 next step:      bounded repair -> re-verification
 ```
 
-That block illustrates the control model; it is **not CLI output** from the current source drop.
+That block illustrates the broader control model. The public source now also includes a smaller runnable exact-artifact verification vertical described below.
 
-**Status:** Early Source Drop — inspectable public primitives are available today; the complete `hmin` runtime/CLI is not yet published.
+**Status:** Early Source Drop — inspectable public primitives plus one runnable exact-artifact verification vertical are available today; the complete `hmin` runtime/CLI is not yet published.
 
 ## Why Human Minority?
 
@@ -93,9 +93,10 @@ The current public boundary exposes provider-neutral building blocks for that mo
 - repair admission and scope policy;
 - source/candidate contracts and portable path rules;
 - provider-neutral facts, credential references and freshness policy;
+- a runnable local exact-artifact verification vertical that binds candidate bytes, producer claim, producer evidence, verifier-created result and acceptance decision;
 - public tests and integrity checks for the exported slice.
 
-The exact exported files are selected from the private canonical upstream through an explicit allowlist and deterministic export manifest.
+The runnable vertical uses the same canonical acceptance composer as the broader control lifecycle. The exact exported files are selected from the canonical upstream through an explicit allowlist and deterministic export manifest.
 
 ### Run the public test suite
 
@@ -107,27 +108,39 @@ python -m pip install --require-hashes --only-binary=:all: -r requirements-test.
 python -m pytest
 ```
 
-### Small runnable example
+### Run the exact-artifact verification vertical
 
-The current source drop can already demonstrate deterministic binding primitives:
+A complete V1 bundle is shipped under `examples/public_verification/`:
 
-```python
-from seed.app.core.hashing import canonical_sha256
-from seed.app.source.portable_paths import canonical_path
-
-path = canonical_path("src/example.py")
-digest = canonical_sha256(
-    {
-        "path": path,
-        "claim": "candidate-produced",
-    }
-)
-
-print(path)
-print(digest)
+```bash
+python -m seed.app.verification.vertical \
+  --candidate examples/public_verification/candidate.txt \
+  --bundle examples/public_verification/bundle.json
 ```
 
-This example intentionally demonstrates only public primitives. It is **not** presented as the complete Human Minority execution or verification vertical.
+The bundle declares:
+
+- the producer identity and claim;
+- the exact candidate identity expected by the obligation;
+- ordered required check IDs;
+- the trusted verifier IDs allowed for this decision;
+- verifier result envelopes bound to the same candidate and claim.
+
+Human Minority recomputes the candidate SHA-256 from the actual candidate bytes, rejects missing/extra/duplicate/stale results, rejects a producer acting as its own trusted verifier, and feeds only the exact required `VerificationResult` set into the same canonical acceptance reducer used by private Seed Control.
+
+The reference module prints deterministic JSON containing candidate identity, claim/plan IDs, per-check verifier/result/status data, acceptance outcome, canonical decision ID and the overall binding fingerprint. The final product CLI will define its own stable exit-code taxonomy; this module is only a reference invocation.
+
+This V1 demonstrates:
+
+- exact candidate-byte identity;
+- producer claim vs verifier-result separation;
+- explicit trusted-verifier input;
+- exact candidate/claim/check/evidence bindings;
+- canonical Seed acceptance reduction;
+- fail-closed missing, substituted or ambiguous proof.
+
+It does **not** demonstrate secure execution of untrusted code, Docker/WSL confinement, cryptographic verifier authentication, provider orchestration, autonomous repair, merge authority or deployment authority. The trusted-verifier list is explicit caller-supplied authority input to this portable decision; V1 does not prove the identity or provenance of the party that supplied that list.
+
 
 ## Current public boundary
 

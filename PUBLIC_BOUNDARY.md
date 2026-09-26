@@ -8,6 +8,8 @@ The artifact contains a deliberately small, inspectable set of provider-neutral 
 
 - deterministic JSON and hashing helpers;
 - claim, evidence, verification-result and acceptance contracts;
+- canonical acceptance composition used by the private control lifecycle;
+- a runnable exact-artifact verification bundle path over candidate bytes, producer claim, explicit verifier trust input and bound verifier results;
 - bounded repair contracts and repair-scope policy;
 - source identity and portable-path primitives;
 - provider-neutral credential-reference, observation and freshness contracts;
@@ -24,11 +26,14 @@ This artifact does not include or claim to provide:
 - operational orchestration or deployment machinery;
 - production secret backends or credential custody;
 - private development history, planning records or operator tooling;
+- remote verifier identity attestation;
 - the complete authority → verify → repair → re-verify → integrate runtime.
 
 ## Trust rules
 
 A claim is not proof. Verification results, repair admission and final acceptance remain distinct facts.
+
+The runnable exact-artifact path does not accept a producer-supplied acceptance decision. It recomputes exact candidate identity, requires verifier results to match an explicit obligation and trusted-verifier set, rejects producer/verifier role collapse, and passes only the exact required result set into canonical acceptance composition. Trusted verifier IDs are explicit authority input, not cryptographic identity attestation.
 
 Provider observation freshness is not authorization. A `FRESH` observation says that the observation is current and integrity-valid for the expected route/stage; any required fact must still be explicitly `SATISFIED` by the consuming policy.
 

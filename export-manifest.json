@@ -76,21 +76,35 @@
       "kind": "metadata",
       "mode": "100644",
       "public_path": "PUBLIC_BOUNDARY.md",
-      "public_sha256": "b80914fdb9cf90cfab8f4f373c76da45a45e92e54f7794b53d3f2282591f9d52",
+      "public_sha256": "50dfaa77f6180b28bcde56c9f7abc2a999eaa5224216d4cb91ffd3d254981801",
       "transformation": "NONE"
     },
     {
       "kind": "metadata",
       "mode": "100644",
       "public_path": "README.md",
-      "public_sha256": "3f7d07bb14c39ea207de311640516282c79c5657ddc75a53a4497b5485dcecdd",
+      "public_sha256": "8f0e170ebbabdb0d44e6483786b75fec313f646fbc77b7cd4417fe072dcda5d3",
       "transformation": "NONE"
     },
     {
       "kind": "metadata",
       "mode": "100644",
       "public_path": "SECURITY.md",
-      "public_sha256": "9d57f10a518ce777ce3049924245f5d41b233bd0a051f2d36dc3cd4a2d5b9472",
+      "public_sha256": "6268b56a54eb1466f78627331b119edd79b40f50f668f944e4608a0ca7b0819c",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "examples/public_verification/bundle.json",
+      "public_sha256": "82d778eeafec35f9dbcefa01be0e9a1a2d9a5555b25671551a9b08f65e741ee4",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "examples/public_verification/candidate.txt",
+      "public_sha256": "b37b8f1a47e8297da56fb5ba083dd7602be13bd869e55e7fdec00828349f7e4c",
       "transformation": "NONE"
     },
     {
@@ -234,6 +248,20 @@
       "transformation": "NONE"
     },
     {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/verification/decision.py",
+      "public_sha256": "d2040f9f208517a8f17c0137f309af81663897845ab422d21c7d92b0855bc001",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "seed/app/verification/vertical.py",
+      "public_sha256": "8337d6f043ec2784e2b33433b18263fd8fe7e1db4dd29cc92b86670bcc39506e",
+      "transformation": "NONE"
+    },
+    {
       "kind": "test",
       "mode": "100644",
       "public_path": "tests/test_contracts_and_paths.py",
@@ -259,6 +287,13 @@
       "mode": "100644",
       "public_path": "tests/test_public_boundary.py",
       "public_sha256": "09a70614dea38a4f19ae96e52ba0a57390de75571ab9f9f71439482dcb0c9c11",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "test",
+      "mode": "100644",
+      "public_path": "tests/test_public_verification_vertical.py",
+      "public_sha256": "761334c1e7872e45073601676af70a436b8e06aa70635ff74d053fec942dbbe0",
       "transformation": "NONE"
     },
     {

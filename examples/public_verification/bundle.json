@@ -1,0 +1,40 @@
+{
+  "schema_version": "human-minority-verification-bundle-v1",
+  "candidate": {
+    "producer_id": "worker:example",
+    "claim": {
+      "claim_id": "claim:example",
+      "assertion": "candidate matches the published example bytes",
+      "raw_artifact_ref": "sha256:b37b8f1a47e8297da56fb5ba083dd7602be13bd869e55e7fdec00828349f7e4c"
+    },
+    "evidence_ids": [
+      "candidate:evidence"
+    ]
+  },
+  "obligation": {
+    "plan_id": "plan:example",
+    "claim_id": "claim:example",
+    "candidate_identity": "sha256:b37b8f1a47e8297da56fb5ba083dd7602be13bd869e55e7fdec00828349f7e4c",
+    "required_check_ids": [
+      "check:independent"
+    ],
+    "trusted_verifier_ids": [
+      "verifier:example"
+    ]
+  },
+  "results": [
+    {
+      "verifier_id": "verifier:example",
+      "candidate_identity": "sha256:b37b8f1a47e8297da56fb5ba083dd7602be13bd869e55e7fdec00828349f7e4c",
+      "result": {
+        "result_id": "result:example",
+        "claim_id": "claim:example",
+        "check_id": "check:independent",
+        "status": "PASS",
+        "evidence_ids": [
+          "verifier:evidence"
+        ]
+      }
+    }
+  ]
+}
