@@ -34,7 +34,7 @@ next step:      bounded repair -> re-verification
 
 That block illustrates the broader control model. The public source now also includes a smaller runnable exact-artifact verification vertical described below.
 
-**Status:** Early Source Drop — inspectable public primitives plus one runnable exact-artifact verification vertical are available today; the complete `hmin` runtime/CLI is not yet published.
+**Status:** Early Source Drop — inspectable public primitives, the runnable exact-artifact verification vertical, and the installable `human-minority` V1 CLI are available. Private execution/orchestration runtime remains outside this public boundary.
 
 ## Why Human Minority?
 
@@ -104,6 +104,7 @@ The runnable vertical uses the same canonical acceptance composer as the broader
 git clone https://github.com/Rud0lfoRRP/Human-Minority.git
 cd Human-Minority
 
+python -m pip install --no-deps .
 python -m pip install --require-hashes --only-binary=:all: -r requirements-test.txt
 python -m pytest
 ```
@@ -128,7 +129,7 @@ The bundle declares:
 
 Human Minority recomputes the candidate SHA-256 from the actual candidate bytes, rejects missing/extra/duplicate/stale results, rejects a producer acting as its own trusted verifier, and feeds only the exact required `VerificationResult` set into the same canonical acceptance reducer used by private Seed Control.
 
-The reference module prints deterministic JSON containing candidate identity, claim/plan IDs, per-check verifier/result/status data, acceptance outcome, canonical decision ID and the overall binding fingerprint. The final product CLI will define its own stable exit-code taxonomy; this module is only a reference invocation.
+The reference module prints deterministic JSON containing candidate identity, claim/plan IDs, per-check verifier/result/status data, acceptance outcome, canonical decision ID and the overall binding fingerprint. The installed `human-minority verify` command wraps this same implementation and applies the stable product exit-code/result envelope; the module invocation remains a lower-level reference surface.
 
 This V1 demonstrates:
 
@@ -163,11 +164,30 @@ Do not infer security guarantees from design intent. Only guarantees explicitly 
 
 - Product: **Human Minority**
 - Repository: **Human-Minority**
-- CLI name: **`hmin`**
+- CLI name: **`human-minority`**
 
-The `hmin` CLI name is reserved for the public product but is **not shipped in this Early Source Drop**.
+The public product package is installable from this checkout and exposes:
 
-The Python module namespace in this first source drop remains `seed.app`. That is an implementation namespace carried forward from the private upstream and is not the public product name.
+```bash
+human-minority --version
+human-minority inspect
+human-minority verify --candidate <file> --bundle <file>
+```
+
+The canonical verification primitives remain under the exported `seed.app` namespace; `human_minority` is the thin public product/CLI package around those exported capabilities.
+
+### What `human-minority inspect` proves
+
+`inspect` validates the **committed Git `HEAD`** against the committed `export-manifest.json`: tracked-file membership, file modes, per-file SHA-256 values, the public boundary document and the security contact.
+
+It deliberately reports two separate facts:
+
+- `integrity: PASS` / `integrity_scope: COMMITTED_HEAD` means the committed tree is internally consistent with its committed manifest;
+- `authenticity: NOT_ESTABLISHED` means that self-consistency alone does not prove that this commit is an official published Human Minority artifact.
+
+To establish authenticity, compare the reported `public_commit` and `manifest_sha256` with values obtained from a trusted published release or repository reference.
+
+`working_tree_clean` reports whether the checkout differs from committed `HEAD`. A dirty working tree produces a warning but does not turn committed-`HEAD` integrity into failure, because uncommitted and untracked files are outside that integrity scope.
 
 ## Product direction
 
@@ -183,7 +203,7 @@ The declared compatibility target for this Early Source Drop is **Python 3.12–
 
 The exported runtime modules use only the Python standard library; `pytest` is needed only for the test suite.
 
-Run examples from the repository root so the exported `seed.app` namespace is importable.
+Install the checkout before using the product command. The lower-level `python -m seed.app.verification.vertical` reference invocation remains available for direct inspection.
 
 The shipped canonical JSON format is the project-specific `seed-canonical-json-v1` contract. It does **not** claim RFC 8785 / JCS compatibility. The 8 MiB limit applies to parsing untrusted JSON bytes; canonical serialization and hashing are not capped by that parser-input limit, so large in-memory manifests can still be hashed.
 
