@@ -10,12 +10,13 @@ The artifact contains a deliberately small, inspectable set of provider-neutral 
 - claim, evidence, verification-result and acceptance contracts;
 - canonical acceptance composition used by the private control lifecycle;
 - a runnable exact-artifact verification bundle path over candidate bytes, producer claim, explicit verifier trust input and bound verifier results;
+- an installable `human-minority` CLI limited to version reporting, public artifact inspection and that exact portable verification vertical;
 - bounded repair contracts and repair-scope policy;
 - source identity and portable-path primitives;
 - provider-neutral credential-reference, observation and freshness contracts;
 - curated public tests and repository metadata.
 
-The exported Python namespace remains `seed.app` for compatibility in this source drop.
+Canonical verification primitives remain under `seed.app`; the thin public product package and console entry point use the `human_minority` namespace.
 
 ## Excluded
 

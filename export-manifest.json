@@ -20,7 +20,7 @@
       "kind": "metadata",
       "mode": "100644",
       "public_path": ".github/workflows/public-ci.yml",
-      "public_sha256": "e45a14bdca9f65c01a5bc5ada0b63e0a8ec7696437853c42e13f29babd95287f",
+      "public_sha256": "b4145517ec9d9d5e9625014a548f44cbac8efa53e88d5db8f12d123939a91862",
       "transformation": "NONE"
     },
     {
@@ -55,7 +55,7 @@
       "kind": "metadata",
       "mode": "100644",
       "public_path": ".gitignore",
-      "public_sha256": "81267b1cebddecaee98bac7109b8932122e00d00fc3c3041b9342650172fadee",
+      "public_sha256": "feab8d5ff969f4df9aaf6c132889f60f6aa9310708c1d7a5cc54e9298e696c46",
       "transformation": "NONE"
     },
     {
@@ -76,14 +76,14 @@
       "kind": "metadata",
       "mode": "100644",
       "public_path": "PUBLIC_BOUNDARY.md",
-      "public_sha256": "50dfaa77f6180b28bcde56c9f7abc2a999eaa5224216d4cb91ffd3d254981801",
+      "public_sha256": "c0ed45d649bfe4ce96b9b71993fde594572014f4cf5c856f3f04040ace783b58",
       "transformation": "NONE"
     },
     {
       "kind": "metadata",
       "mode": "100644",
       "public_path": "README.md",
-      "public_sha256": "8f0e170ebbabdb0d44e6483786b75fec313f646fbc77b7cd4417fe072dcda5d3",
+      "public_sha256": "4234cb45a45fbc9c37ad16255f1011b8701c940feda7342ddd943df9df0d42cd",
       "transformation": "NONE"
     },
     {
@@ -105,6 +105,55 @@
       "mode": "100644",
       "public_path": "examples/public_verification/candidate.txt",
       "public_sha256": "b37b8f1a47e8297da56fb5ba083dd7602be13bd869e55e7fdec00828349f7e4c",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "human_minority/__init__.py",
+      "public_sha256": "7cf021ddaaf801634ee93fc0d7916295a7266d82e9552b01a750d051a2d8e1fa",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "human_minority/__main__.py",
+      "public_sha256": "9db74feb31653aa7028ab831a0843a1e259585d87b5119b918e5abe7f1309819",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "human_minority/_version.py",
+      "public_sha256": "7ec3672694fa394e299bf2ad93c57ca6a6b9d135db760276e68970c41c600bad",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "human_minority/artifact.py",
+      "public_sha256": "38514eccda5e142092e093039000ddf8843a4336b94c72384b99ad7f742f6b40",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "human_minority/cli.py",
+      "public_sha256": "2cc94c32d5ea2f9296af4b36cf97e06e8031ea0a01a616d753bc581e44ae5658",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "runtime",
+      "mode": "100644",
+      "public_path": "human_minority/result.py",
+      "public_sha256": "d35ebbeeea3a5d359ac8c3a1260c860910e500f3605246b24d2356011e9f157d",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "pyproject.toml",
+      "public_sha256": "fbfb95442c94ddb99a0b6decdca8c8db33d0750940cdf9ae81fef243fc70f175",
       "transformation": "NONE"
     },
     {
@@ -278,6 +327,13 @@
     {
       "kind": "test",
       "mode": "100644",
+      "public_path": "tests/test_human_minority_cli.py",
+      "public_sha256": "6a121f845e6d6b8d71bd5b31dec3f8dbfb200004e9b407f9de72a9e58608dfba",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "test",
+      "mode": "100644",
       "public_path": "tests/test_provider_contracts.py",
       "public_sha256": "c8bea7cf916306c0a5d7f0812d9e4eb95d084fbba63231c252f3e449231b28e4",
       "transformation": "NONE"
@@ -307,7 +363,7 @@
       "kind": "test",
       "mode": "100644",
       "public_path": "tools/verify_public_artifact.py",
-      "public_sha256": "428b1d56f58d5c245d7999e9b016a5ad74408bace7ced9dc6620161f9fcdbed3",
+      "public_sha256": "2d58ef106c44312fc1a0b553e4183c5e0487ac36acc8736d2083b02015106d90",
       "transformation": "NONE"
     }
   ],
