@@ -10,108 +10,108 @@
 [![OpenSSF Scorecard](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-scorecard.yml/badge.svg)](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-scorecard.yml)
 [![License: PolyForm Perimeter 1.0.1](https://img.shields.io/badge/license-PolyForm%20Perimeter%201.0.1-informational)](LICENSE)
 
-Human Minority is a **source-available verification and policy-enforcement layer for AI coding agents**.
+Human Minority is a **source-available verification layer for AI coding workflows**.
 
-A coding agent can say *"tests passed"* or *"ready to merge."* Human Minority asks a different set of questions: **which exact candidate, which evidence, which verifier, and who still has authority to accept it?**
+It is built around a simple rule: an agent saying *"tests passed"* or *"ready to merge"* is still only a claim. Human Minority binds verification to an exact candidate, explicit evidence and verifier results, then produces a decision without giving the producing agent authority to accept or merge its own work.
 
-It separates what an agent *claims* from what an independent verifier can *prove*. Candidate identity, evidence, verification, bounded repair and final integration remain distinct steps, with acceptance authority kept outside the agent that produced the work.
+**Current status:** early development. The repository is still published as an `EARLY_SOURCE_DROP`, but the public V1 CLI is installable and runnable today. Private execution, provider orchestration and deployment machinery are outside this public boundary.
 
-### The idea in 15 seconds
+## Quick start
 
-Conceptually, a failed claim should look like this:
-
-```text
-Agent claim: "Tests passed. Ready to merge."
-
-Human Minority:
-candidate       BOUND
-evidence        PRESENT
-verification    FAILED
-
-decision:       NEEDS_REPAIR
-next step:      bounded repair -> re-verification
-```
-
-That block illustrates the broader control model. The public source now also includes a smaller runnable exact-artifact verification vertical described below.
-
-**Status:** Early Source Drop — inspectable public primitives, the runnable exact-artifact verification vertical, and the installable `human-minority` V1 CLI are available. Private execution/orchestration runtime remains outside this public boundary.
-
-## Why Human Minority?
-
-AI coding agents can write code, run tools and report success. That does not make their report authoritative.
-
-Human Minority is built around four rules:
-
-- **A claim is not proof.** "Tests passed" is evidence only when independently bound and verified.
-- **The candidate must be exact.** Verification must apply to the artifact that may actually be accepted.
-- **Repair must stay bounded.** A failed candidate should not silently expand its own authority while fixing itself.
-- **Integration is a separate decision.** Passing verification does not let the producing agent grant itself merge/deploy authority.
-
-The goal is not to trust agents more. It is to make **more agent autonomy compatible with the same human veto**.
-
-## Target verification loop
-
-The broader product direction is a controlled verification loop like this:
-
-```text
-human task / authority
-          │
-          ▼
-  candidate + evidence
-          │
-          ▼
-bind exact candidate identity
-          │
-          ▼
- independent verification
-      ┌────┼───────────┐
-      ▼    ▼           ▼
-    FAIL  INCONCLUSIVE PASS
-      │                 │
-      ▼                 │
- bounded repair         │
-      │                 │
-      ▼                 │
-  re-verification ──────┘
-          │
-          ▼
-   human decision
-          │
-          ▼
-controlled integration
-```
-
-A future runnable public preview must fail closed when a required verification or confinement boundary cannot be established. The diagram above describes the intended full vertical; the current Early Source Drop publishes only the inspectable primitives described below.
-
-## What you can inspect and run today
-
-The current public boundary exposes provider-neutral building blocks for that model:
-
-- deterministic/canonical identity helpers;
-- claims, evidence and verification-result contracts;
-- bounded repair request and lineage contracts;
-- repair admission and scope policy;
-- source/candidate contracts and portable path rules;
-- provider-neutral facts, credential references and freshness policy;
-- a runnable local exact-artifact verification vertical that binds candidate bytes, producer claim, producer evidence, verifier-created result and acceptance decision;
-- public tests and integrity checks for the exported slice.
-
-The runnable vertical uses the same canonical acceptance composer as the broader control lifecycle. The exact exported files are selected from the canonical upstream through an explicit allowlist and deterministic export manifest.
-
-### Run the public test suite
+Requires Python **3.12–3.14**.
 
 ```bash
 git clone https://github.com/Rud0lfoRRP/Human-Minority.git
 cd Human-Minority
 
 python -m pip install --no-deps .
+
+human-minority --version
+human-minority inspect
+human-minority verify \
+  --candidate examples/public_verification/candidate.txt \
+  --bundle examples/public_verification/bundle.json
+```
+
+The package has no runtime dependencies beyond the Python standard library.
+
+To run the public test suite:
+
+```bash
 python -m pip install --require-hashes --only-binary=:all: -r requirements-test.txt
 python -m pytest
 ```
 
-### Run the exact-artifact verification vertical
+## What is available today
 
-A complete V1 bundle is shipped under `examples/public_verification/`:
+The public artifact contains:
+
+- an installable `human-minority` CLI;
+- exact candidate-byte identity using SHA-256;
+- claim, evidence, verification-result and acceptance contracts;
+- a runnable exact-artifact verification vertical;
+- deterministic JSON and hashing helpers;
+- source/candidate and portable-path contracts;
+- bounded repair request, lineage and scope-policy primitives;
+- provider-neutral credential-reference, observation and freshness contracts;
+- a committed export manifest plus public integrity checks;
+- curated public tests and CI.
+
+The exported verification path uses the same canonical acceptance composition as the upstream implementation. It does not replace it with a demo-only reducer.
+
+## CLI
+
+### `human-minority --version`
+
+Reports the public product version.
+
+```bash
+human-minority --version
+human-minority --version --json
+```
+
+### `human-minority inspect`
+
+Checks the **committed Git `HEAD`** against the committed `export-manifest.json`.
+
+It verifies tracked-file membership, file modes, per-file SHA-256 values, the public boundary document and the security contact.
+
+Example:
+
+```bash
+human-minority inspect --json
+```
+
+Important semantics:
+
+- `integrity: PASS` means the committed tree is internally consistent with its committed manifest;
+- `integrity_scope: COMMITTED_HEAD` means uncommitted files are outside that integrity decision;
+- `working_tree_clean` reports whether the checkout differs from committed `HEAD`;
+- `authenticity: NOT_ESTABLISHED` means self-consistency alone does **not** prove that the checkout is an official published artifact.
+
+To establish authenticity, compare the reported `public_commit` and `manifest_sha256` with values obtained from a trusted published repository or release reference.
+
+### `human-minority verify`
+
+Evaluates an exact candidate against a strict verification bundle:
+
+```bash
+human-minority verify \
+  --candidate examples/public_verification/candidate.txt \
+  --bundle examples/public_verification/bundle.json
+```
+
+The bundle binds:
+
+- producer identity and claim;
+- exact candidate identity;
+- required check IDs;
+- trusted verifier IDs;
+- verifier result envelopes bound to the same candidate and claim.
+
+Human Minority recomputes the candidate SHA-256 from the actual bytes, rejects missing, extra, duplicate or mismatched results, rejects producer/verifier role collapse, and passes only the required result set into canonical acceptance composition.
+
+The lower-level reference invocation remains available:
 
 ```bash
 python -m seed.app.verification.vertical \
@@ -119,122 +119,123 @@ python -m seed.app.verification.vertical \
   --bundle examples/public_verification/bundle.json
 ```
 
-The bundle declares:
+## Exit codes
 
-- the producer identity and claim;
-- the exact candidate identity expected by the obligation;
-- ordered required check IDs;
-- the trusted verifier IDs allowed for this decision;
-- verifier result envelopes bound to the same candidate and claim.
+The public CLI uses the product exit taxonomy:
 
-Human Minority recomputes the candidate SHA-256 from the actual candidate bytes, rejects missing/extra/duplicate/stale results, rejects a producer acting as its own trusted verifier, and feeds only the exact required `VerificationResult` set into the same canonical acceptance reducer used by private Seed Control.
+| Exit | Meaning |
+|---:|---|
+| `0` | command succeeded / verification accepted |
+| `1` | valid negative outcome, such as drift or repair-needed verification |
+| `2` | invalid usage, input or binding |
+| `3` | required environment or checkout is unavailable |
+| `5` | unexpected internal failure |
+| `130` | interrupted |
 
-The reference module prints deterministic JSON containing candidate identity, claim/plan IDs, per-check verifier/result/status data, acceptance outcome, canonical decision ID and the overall binding fingerprint. The installed `human-minority verify` command wraps this same implementation and applies the stable product exit-code/result envelope; the module invocation remains a lower-level reference surface.
+A negative verification result is not treated as a CLI crash.
 
-This V1 demonstrates:
+## Why Human Minority exists
 
-- exact candidate-byte identity;
-- producer claim vs verifier-result separation;
-- explicit trusted-verifier input;
-- exact candidate/claim/check/evidence bindings;
-- canonical Seed acceptance reduction;
-- fail-closed missing, substituted or ambiguous proof.
+AI coding agents can write code, run tools and report success. None of that makes their report authoritative.
 
-It does **not** demonstrate secure execution of untrusted code, Docker/WSL confinement, cryptographic verifier authentication, provider orchestration, autonomous repair, merge authority or deployment authority. The trusted-verifier list is explicit caller-supplied authority input to this portable decision; V1 does not prove the identity or provenance of the party that supplied that list.
+Human Minority keeps four things separate:
 
+1. **Claim** — what the producing agent says happened.
+2. **Evidence and verification** — what can be independently checked against the exact candidate.
+3. **Repair** — what may be changed inside an allowed scope after verification fails.
+4. **Authority** — who may accept, merge or deploy the result.
 
-## Current public boundary
+The intended control loop is:
 
-This repository is an **Early Source Drop**: a deliberately small, inspectable subset published before the complete runnable product is ready.
-
-It is **not**:
-
-- the complete Human Minority product;
-- a production-ready release with compatibility or support guarantees;
-- proof that untrusted repository code can already be executed safely on every platform;
-- the private provider/runtime/orchestration stack;
-- private self-improvement or internal orchestration machinery;
-- a hosted AI service with bundled inference credits.
-
-Public API, CLI and runtime interfaces may still change and are not yet covered by compatibility or support guarantees.
-
-Do not infer security guarantees from design intent. Only guarantees explicitly supported by the code and documented execution profile of a released artifact apply.
-
-## Naming and interfaces
-
-- Product: **Human Minority**
-- Repository: **Human-Minority**
-- CLI name: **`human-minority`**
-
-The public product package is installable from this checkout and exposes:
-
-```bash
-human-minority --version
-human-minority inspect
-human-minority verify --candidate <file> --bundle <file>
+```text
+task / authority
+      |
+      v
+candidate + claim
+      |
+      v
+bind exact candidate
+      |
+      v
+independent verification
+   /       |        \
+ FAIL  INCONCLUSIVE  PASS
+   |                  |
+bounded repair        |
+   |                  |
+re-verification ------+
+      |
+      v
+human / policy decision
+      |
+      v
+controlled integration
 ```
 
-The canonical verification primitives remain under the exported `seed.app` namespace; `human_minority` is the thin public product/CLI package around those exported capabilities.
+The public V1 CLI implements the portable verification portion of that model. It does not claim to publish the complete private execution and orchestration system.
 
-### What `human-minority inspect` proves
+## What this release does not claim
 
-`inspect` validates the **committed Git `HEAD`** against the committed `export-manifest.json`: tracked-file membership, file modes, per-file SHA-256 values, the public boundary document and the security contact.
+This public artifact does **not** demonstrate or provide:
 
-It deliberately reports two separate facts:
+- secure execution of arbitrary untrusted repositories;
+- Docker or WSL confinement as a public product guarantee;
+- production agent/provider orchestration;
+- cryptographic verifier identity attestation;
+- autonomous repair execution;
+- merge or deployment authority;
+- production secret custody;
+- bundled AI inference credits;
+- compatibility or support guarantees for a stable production release.
 
-- `integrity: PASS` / `integrity_scope: COMMITTED_HEAD` means the committed tree is internally consistent with its committed manifest;
-- `authenticity: NOT_ESTABLISHED` means that self-consistency alone does not prove that this commit is an official published Human Minority artifact.
+The trusted-verifier list in the public verification bundle is explicit authority input. V1 verifies the binding and decision logic; it does not prove the real-world identity of whoever supplied that list.
 
-To establish authenticity, compare the reported `public_commit` and `manifest_sha256` with values obtained from a trusted published release or repository reference.
+See [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md) for the exact exported capability boundary.
 
-`working_tree_clean` reports whether the checkout differs from committed `HEAD`. A dirty working tree produces a warning but does not turn committed-`HEAD` integrity into failure, because uncommitted and untracked files are outside that integrity scope.
+## Public artifact and provenance
 
-## Product direction
+Human Minority is exported from a separate canonical upstream through an explicit allowlist and deterministic manifest.
 
-> **Controlled execution and independent verification for untrusted software agents.**
+The public repository contains only the selected artifact, not the private development history.
 
-That describes the intended full system, not the capability boundary of this Early Source Drop.
+Useful files:
 
-The intended product model is self-service and **BYO AI / BYO Compute**. Human Minority should control and verify agent work without making the maintainer's API spend the customer's hidden cost center.
+- [export-manifest.json](export-manifest.json) — committed file inventory and SHA-256 bindings;
+- [PUBLIC_BOUNDARY.md](PUBLIC_BOUNDARY.md) — what this artifact includes and excludes;
+- [SECURITY.md](SECURITY.md) — security scope and reporting instructions;
+- [CONTRIBUTING.md](CONTRIBUTING.md) — current contribution policy.
 
-## Requirements
+Do not infer security guarantees from design intent. Only properties enforced by the shipped code and documented public boundary apply.
 
-The declared compatibility target for this Early Source Drop is **Python 3.12–3.14**. The first public CI run verified Python 3.12, 3.13 and 3.14 on Ubuntu, Windows and macOS; current public CI results remain the source of truth for continuing platform compatibility.
+## Technical notes
 
-The exported runtime modules use only the Python standard library; `pytest` is needed only for the test suite.
+- Python compatibility target: **3.12–3.14**.
+- Runtime dependencies: **standard library only**.
+- The project-specific canonical JSON format is `seed-canonical-json-v1`; it does not claim RFC 8785 / JCS compatibility.
+- Portable-path collision checks are intentionally conservative across supported host filesystems.
+- Provider observation `FRESH` means current, route-bound and integrity-valid; it is not authorization and does not turn a negative fact into a permissive one.
+- The exported canonical verification primitives remain under the `seed.app` namespace; `human_minority` is the thin public product/CLI package around the published capability set.
 
-Install the checkout before using the product command. The lower-level `python -m seed.app.verification.vertical` reference invocation remains available for direct inspection.
+## Security
 
-The shipped canonical JSON format is the project-specific `seed-canonical-json-v1` contract. It does **not** claim RFC 8785 / JCS compatibility. The 8 MiB limit applies to parsing untrusted JSON bytes; canonical serialization and hashing are not capped by that parser-input limit, so large in-memory manifests can still be hashed.
+The public artifact intentionally excludes private operational execution machinery. It should not be treated as a finished sandbox or complete secure-execution product.
 
-Portable path collision checks are intentionally conservative across supported host filesystems. They may reject some names that a particular filesystem would keep distinct; that is a fail-closed portability tradeoff, not a claim of byte-for-byte filesystem name equivalence.
+See [SECURITY.md](SECURITY.md).
 
-Provider observation `FRESH` means the observation is current, route-bound and integrity-valid under the freshness policy. It does **not** mean every fact is permissive: callers that authorize selection or dispatch must still require the relevant facts to be `SATISFIED`; `BLOCKING` remains a negative fact.
-
-## Security status
-
-The Early Source Drop intentionally omits private operational execution machinery. It must not be described as a finished sandbox or as a complete secure-execution product.
-
-See `SECURITY.md` for the exact supported security boundary and reporting instructions.
-
-## Licensing
+## License
 
 Human Minority is **source-available, not OSI open source**.
 
-The public license is **PolyForm Perimeter 1.0.1**. The shipped `LICENSE` file controls.
-
-The license permits use, modification and distribution for permitted purposes, while excluding providing to others a product that competes with the software as defined by the license terms. Do not rely on this README as a substitute for the license text.
+The repository is licensed under **PolyForm Perimeter 1.0.1**. The shipped [LICENSE](LICENSE) file controls; this README is not a substitute for the license text.
 
 ## Contributions
 
 Issues and technical feedback are welcome.
 
-External code contributions are not accepted/incorporated until contribution and relicensing terms are explicitly defined. Forking or modifying published code remains governed by the shipped software license; contribution policy only governs what the upstream project accepts back.
+External code contributions are not currently incorporated until contribution and relicensing terms are explicitly defined. Forking or modifying the published source remains governed by the shipped license.
 
-See `CONTRIBUTING.md` for the current contribution boundary.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Status
 
-**Early development · Early Source Drop**
-
-The private canonical upstream remains separate. Public artifacts are produced through a controlled export with fresh public history rather than by exposing private Git history.
+**Early development · public V1 CLI available · artifact stage: `EARLY_SOURCE_DROP`**
