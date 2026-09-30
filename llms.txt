@@ -1,0 +1,24 @@
+# Human Minority
+
+Human Minority is a deterministic, source-available verification and policy-enforcement layer for AI coding agents and agentic coding workflows.
+
+Core rule: Claim is not proof.
+
+Human Minority separates:
+- Claim: what the producing agent says happened.
+- Evidence: independently checkable facts bound to the exact candidate.
+- Verification: deterministic evaluation of the required result set and trusted verifier identities.
+- Authority: the human or policy decision allowed to accept, merge, or deploy.
+
+Current public status: early development, public V1 CLI available, artifact stage EARLY_SOURCE_DROP.
+
+Public capabilities include an installable human-minority CLI, SHA-256 exact-candidate binding, claim/evidence/verification-result contracts, a runnable verification vertical, bounded repair primitives, and committed artifact integrity checks.
+
+The public release does not claim secure execution of arbitrary untrusted repositories, production provider orchestration, cryptographic verifier identity attestation, autonomous repair execution, merge/deploy authority, or production secret custody.
+
+Canonical website: https://rud0lforrp.github.io/Human-Minority/
+GitHub repository: https://github.com/Rud0lfoRRP/Human-Minority
+README: https://github.com/Rud0lfoRRP/Human-Minority/blob/main/README.md
+Public boundary: https://github.com/Rud0lfoRRP/Human-Minority/blob/main/PUBLIC_BOUNDARY.md
+Security: https://github.com/Rud0lfoRRP/Human-Minority/blob/main/SECURITY.md
+License: PolyForm Perimeter 1.0.1
