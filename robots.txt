@@ -1,4 +1,9 @@
 User-agent: *
-Allow: /
+Allow: /Human-Minority/
+Disallow: /Human-Minority/.github/
+Disallow: /Human-Minority/human_minority/
+Disallow: /Human-Minority/seed/
+Disallow: /Human-Minority/tests/
+Disallow: /Human-Minority/tools/
 
 Sitemap: https://rud0lforrp.github.io/Human-Minority/sitemap.xml
