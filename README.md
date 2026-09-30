@@ -10,7 +10,7 @@
 [![OpenSSF Scorecard](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-scorecard.yml/badge.svg)](https://github.com/Rud0lfoRRP/Human-Minority/actions/workflows/public-scorecard.yml)
 [![License: PolyForm Perimeter 1.0.1](https://img.shields.io/badge/license-PolyForm%20Perimeter%201.0.1-informational)](LICENSE)
 
-Human Minority is a **source-available verification layer for AI coding workflows**.
+Human Minority is a **deterministic, source-available verification layer for AI coding agents and agentic coding workflows**.
 
 It is built around a simple rule: an agent saying *"tests passed"* or *"ready to merge"* is still only a claim. Human Minority binds verification to an exact candidate, explicit evidence and verifier results, then produces a decision without giving the producing agent authority to accept or merge its own work.
 
@@ -111,6 +111,18 @@ The bundle binds:
 
 Human Minority recomputes the candidate SHA-256 from the actual bytes, rejects missing, extra, duplicate or mismatched results, rejects producer/verifier role collapse, and passes only the required result set into canonical acceptance composition.
 
+### See the veto reject a bad bundle
+
+The repository also ships an intentionally invalid bundle where the producer is listed as its own trusted verifier:
+
+```bash
+human-minority verify \
+  --candidate examples/public_verification/candidate.txt \
+  --bundle examples/public_verification/bundle-role-collapse.json
+```
+
+The command is expected to return exit code `2` with `status: "INPUT_REJECTED"` and the error `producer must not be a trusted verifier for the same vertical`. This is a deliberate rejection example, not a broken fixture.
+
 The lower-level reference invocation remains available:
 
 ```bash
@@ -207,6 +219,12 @@ Useful files:
 
 Do not infer security guarantees from design intent. Only properties enforced by the shipped code and documented public boundary apply.
 
+### Why the public code still uses `seed.app`
+
+Human Minority is the public product and CLI surface. The verification primitives underneath it are exported from the canonical Seed upstream and intentionally retain their original `seed.app` package paths.
+
+Keeping those paths preserves the identity of the published implementation instead of copying the same logic into a renamed demo-only package. The thin `human_minority` package provides the public CLI and artifact-facing interface around that exported capability set.
+
 ## Technical notes
 
 - Python compatibility target: **3.12–3.14**.
@@ -214,7 +232,6 @@ Do not infer security guarantees from design intent. Only properties enforced by
 - The project-specific canonical JSON format is `seed-canonical-json-v1`; it does not claim RFC 8785 / JCS compatibility.
 - Portable-path collision checks are intentionally conservative across supported host filesystems.
 - Provider observation `FRESH` means current, route-bound and integrity-valid; it is not authorization and does not turn a negative fact into a permissive one.
-- The exported canonical verification primitives remain under the `seed.app` namespace; `human_minority` is the thin public product/CLI package around the published capability set.
 
 ## Security
 
