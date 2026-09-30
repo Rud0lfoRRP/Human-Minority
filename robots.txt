@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rud0lforrp.github.io/Human-Minority/sitemap.xml
