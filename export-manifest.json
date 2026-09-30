@@ -83,7 +83,7 @@
       "kind": "metadata",
       "mode": "100644",
       "public_path": "README.md",
-      "public_sha256": "bea56aee66ef351f0b1a1af4ed9ebacdc22b37d4f06c4b4928f4cf7ac8104490",
+      "public_sha256": "5a33dc1ae7610a34b485047111c08826e9a709cc9376589d4d6ab154dd27653b",
       "transformation": "NONE"
     },
     {
@@ -91,6 +91,13 @@
       "mode": "100644",
       "public_path": "SECURITY.md",
       "public_sha256": "6268b56a54eb1466f78627331b119edd79b40f50f668f944e4608a0ca7b0819c",
+      "transformation": "NONE"
+    },
+    {
+      "kind": "metadata",
+      "mode": "100644",
+      "public_path": "examples/public_verification/bundle-role-collapse.json",
+      "public_sha256": "2783d83144129b0a1dd561992757a26561dc54a569b6c75c13db45311ffb163f",
       "transformation": "NONE"
     },
     {
