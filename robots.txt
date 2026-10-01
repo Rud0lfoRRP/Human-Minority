@@ -7,3 +7,5 @@ Disallow: /Human-Minority/tests/
 Disallow: /Human-Minority/tools/
 
 Sitemap: https://rud0lforrp.github.io/Human-Minority/sitemap.xml
+
+# Pages redeploy 2026-10-01
