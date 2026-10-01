@@ -4,50 +4,137 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Human Minority — Verification for AI Coding Agents</title>
-  <meta name="description" content="Human Minority is a deterministic, source-available verification and policy-enforcement layer for AI coding agents and agentic coding workflows. Claim is not proof.">
-  <meta name="keywords" content="AI agent verification, AI coding agents, coding agent governance, agentic workflow verification, independent verification, policy enforcement, human in the loop, software verification">
+  <meta name="description" content="Human Minority is a source-available verification layer for AI coding-agent workflows. Public V1 binds claims and verifier results to exact candidate bytes.">
+  <meta name="keywords" content="Human Minority, AI agent verification, AI coding agents, coding agent governance, agentic coding workflows, exact artifact verification, policy enforcement, software verification">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://rud0lforrp.github.io/Human-Minority/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0e13'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-family='system-ui,sans-serif' font-size='28' font-weight='800' fill='%23b8ff5a'%3EHM%3C/text%3E%3C/svg%3E">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Human Minority — Verification for AI Coding Agents">
-  <meta property="og:description" content="Deterministic verification and policy enforcement for AI coding agents. Claim is not proof.">
+  <meta property="og:description" content="Source-available verification for AI coding-agent workflows. Public V1 binds claims and verifier results to exact candidate bytes.">
   <meta property="og:url" content="https://rud0lforrp.github.io/Human-Minority/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Human Minority — Verification for AI Coding Agents">
-  <meta name="twitter:description" content="Deterministic verification and policy enforcement for AI coding agents. Claim is not proof.">
+  <meta name="twitter:description" content="Source-available verification for AI coding-agent workflows. Claim is not proof.">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Human Minority",
-    "alternateName": "Human-Minority",
-    "applicationCategory": "DeveloperApplication",
-    "applicationSubCategory": "AI coding agent verification",
-    "operatingSystem": "Cross-platform",
-    "softwareRequirements": "Python 3.12–3.14",
-    "description": "Deterministic, source-available verification and policy-enforcement layer for AI coding agents and agentic coding workflows.",
-    "url": "https://rud0lforrp.github.io/Human-Minority/",
-    "codeRepository": "https://github.com/Rud0lfoRRP/Human-Minority",
-    "license": "https://polyformproject.org/licenses/perimeter/1.0.1/",
-    "programmingLanguage": "Python"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "Human Minority",
+        "alternateName": "Human-Minority",
+        "url": "https://rud0lforrp.github.io/Human-Minority/"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Human Minority",
+        "alternateName": "Human-Minority",
+        "applicationCategory": "DeveloperApplication",
+        "applicationSubCategory": "AI coding agent verification",
+        "operatingSystem": "Cross-platform",
+        "softwareRequirements": "Python 3.12–3.14",
+        "description": "A deterministic, source-available verification layer for AI coding agents and agentic coding workflows.",
+        "url": "https://rud0lforrp.github.io/Human-Minority/",
+        "sameAs": "https://github.com/Rud0lfoRRP/Human-Minority",
+        "codeRepository": "https://github.com/Rud0lfoRRP/Human-Minority",
+        "license": "https://polyformproject.org/licenses/perimeter/1.0.1/",
+        "programmingLanguage": "Python"
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "name": "Human Minority public artifact",
+        "codeRepository": "https://github.com/Rud0lfoRRP/Human-Minority",
+        "programmingLanguage": "Python",
+        "runtimePlatform": "Python 3.12–3.14",
+        "license": "https://polyformproject.org/licenses/perimeter/1.0.1/",
+        "description": "The public Early Source Drop for Human Minority, including the public CLI, exact-artifact verification path, contracts, tests and integrity checks."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is Human Minority open source?",
+            "acceptedAnswer": {"@type": "Answer", "text": "No. Human Minority is source-available under PolyForm Perimeter 1.0.1 and is not presented as OSI open source."}
+          },
+          {
+            "@type": "Question",
+            "name": "Does the public release run AI agents or providers?",
+            "acceptedAnswer": {"@type": "Answer", "text": "No. Production agent/provider execution, orchestration and deployment machinery are outside the current public boundary."}
+          },
+          {
+            "@type": "Question",
+            "name": "What does the public V1 verify?",
+            "acceptedAnswer": {"@type": "Answer", "text": "It recomputes exact candidate SHA-256 from candidate bytes, checks required result bindings against explicit obligations and trusted verifier IDs, rejects missing, extra, duplicate or mismatched results and rejects producer/verifier role collapse before canonical acceptance composition."}
+          },
+          {
+            "@type": "Question",
+            "name": "Does Human Minority cryptographically prove verifier identity?",
+            "acceptedAnswer": {"@type": "Answer", "text": "No. Trusted verifier IDs are explicit authority input in public V1; remote or cryptographic verifier identity attestation is not provided by this release."}
+          }
+        ]
+      }
+    ]
   }
   </script>
   <style>
     :root{color-scheme:dark;--bg:#0b0e13;--panel:#111722;--text:#eef2f7;--muted:#9ca9ba;--line:#273142;--accent:#b8ff5a;--accent2:#72d6ff;--max:1080px}
-    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 75% 0,#14202d 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(circle at 75% 0,#14202d 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
     a{color:var(--accent2);text-decoration:none} a:hover{text-decoration:underline}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
     header{padding:22px 0;border-bottom:1px solid var(--line)} nav{display:flex;justify-content:space-between;gap:18px;align-items:center}.brand{font-weight:800;color:var(--text)}.navlinks{display:flex;gap:18px;flex-wrap:wrap}
-    .hero{padding:88px 0 62px}.eyebrow{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.11em;font-size:.82rem}.hero h1{font-size:clamp(2.7rem,7vw,5.8rem);line-height:.97;letter-spacing:-.055em;margin:.35em 0 .25em;max-width:900px}.hero p{max-width:760px;color:var(--muted);font-size:1.22rem}.claim{font-size:clamp(1.4rem,3vw,2.1rem);font-weight:800;color:var(--text);margin-top:30px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-block;padding:11px 16px;border:1px solid var(--line);border-radius:10px;color:var(--text);background:var(--panel);font-weight:700}.btn.primary{background:var(--accent);border-color:var(--accent);color:#111}
-    section{padding:56px 0;border-top:1px solid var(--line)} h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;margin:0 0 16px}.lead{color:var(--muted);max-width:760px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}.card{border:1px solid var(--line);background:linear-gradient(180deg,#121925,#0f141d);border-radius:14px;padding:20px}.card h3{margin:0 0 8px}.card p{color:var(--muted);margin:0}.flow{white-space:pre-wrap;background:#080b0f;border:1px solid var(--line);border-radius:14px;padding:20px;overflow:auto;color:#d9e2ef}code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.quick{background:#080b0f;border:1px solid var(--line);border-radius:14px;padding:18px;overflow:auto}.status{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--muted);font-size:.9rem}footer{padding:40px 0 60px;color:var(--muted);border-top:1px solid var(--line)}
-    @media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.hero{padding-top:58px}}@media(max-width:520px){.grid{grid-template-columns:1fr}.navlinks{display:none}}
+    .hero{padding:84px 0 58px}.eyebrow{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.11em;font-size:.82rem}.hero h1{font-size:clamp(2.7rem,7vw,5.8rem);line-height:.97;letter-spacing:-.055em;margin:.35em 0 .25em;max-width:900px}.hero p{max-width:820px;color:var(--muted);font-size:1.17rem}.claim{font-size:clamp(1.4rem,3vw,2.1rem);font-weight:800;color:var(--text);margin-top:30px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-block;padding:11px 16px;border:1px solid var(--line);border-radius:10px;color:var(--text);background:var(--panel);font-weight:700}.btn.primary{background:var(--accent);border-color:var(--accent);color:#111}
+    section{padding:54px 0;border-top:1px solid var(--line)} h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;margin:0 0 16px} h3{margin-top:0}.lead{color:var(--muted);max-width:830px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px}.grid.two{grid-template-columns:repeat(2,1fr)}.grid.three{grid-template-columns:repeat(3,1fr)}.card{border:1px solid var(--line);background:linear-gradient(180deg,#121925,#0f141d);border-radius:14px;padding:20px}.card p,.card li{color:var(--muted)}.card ul{padding-left:20px;margin-bottom:0}.fact strong{display:block;font-size:1.05rem}.fact span{color:var(--muted)}
+    .flow{white-space:pre-wrap;background:#080b0f;border:1px solid var(--line);border-radius:14px;padding:20px;overflow:auto;color:#d9e2ef}code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.quick{background:#080b0f;border:1px solid var(--line);border-radius:14px;padding:18px;overflow:auto}.status{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--muted);font-size:.9rem}.note{border-left:3px solid var(--accent);padding:2px 0 2px 16px;color:var(--muted);max-width:850px}.steps{counter-reset:step;display:grid;gap:12px;margin-top:24px}.step{counter-increment:step;border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--panel)}.step::before{content:counter(step);display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111;font-weight:800;margin-right:10px}.step span{color:var(--muted)}.faq details{border-top:1px solid var(--line);padding:18px 0}.faq details:last-child{border-bottom:1px solid var(--line)}.faq summary{cursor:pointer;font-weight:750}.faq p{color:var(--muted);max-width:850px}footer{padding:40px 0 60px;color:var(--muted);border-top:1px solid var(--line)}
+    @media(max-width:800px){.grid,.grid.three{grid-template-columns:1fr 1fr}.grid.two{grid-template-columns:1fr}.hero{padding-top:58px}}@media(max-width:520px){.grid,.grid.three{grid-template-columns:1fr}.navlinks{display:none}}
   </style>
 </head>
 <body>
-  <header><div class="wrap"><nav><a class="brand" href="./">Human Minority</a><div class="navlinks"><a href="#model">Model</a><a href="#quickstart">Quick start</a><a href="https://github.com/Rud0lfoRRP/Human-Minority">GitHub</a></div></nav></div></header>
+  <header><div class="wrap"><nav><a class="brand" href="./">Human Minority</a><div class="navlinks"><a href="#today">Today</a><a href="#verify">Verification</a><a href="#boundary">Boundary</a><a href="#faq">FAQ</a><a href="https://github.com/Rud0lfoRRP/Human-Minority">GitHub</a></div></nav></div></header>
   <main>
-    <section class="hero" style="border-top:0"><div class="wrap"><div class="eyebrow">AI agent verification · coding agent governance</div><h1>More agents.<br>Same veto.</h1><p>Human Minority is a <strong>deterministic, source-available verification layer for AI coding agents and agentic coding workflows</strong>. It binds claims and verifier results to the exact candidate being checked, while keeping the producing agent separate from acceptance authority.</p><div class="claim">Claim is not proof.</div><div class="actions"><a class="btn primary" href="https://github.com/Rud0lfoRRP/Human-Minority">View on GitHub</a><a class="btn" href="#quickstart">Run the public CLI</a></div><p><span class="status">Early development · public V1 CLI available · EARLY_SOURCE_DROP</span></p></div></section>
-    <section id="model"><div class="wrap"><h2>Separate production from proof.</h2><p class="lead">AI coding agents can write code, run tools and report success. Human Minority treats those reports as claims until independent evidence is checked against the exact candidate.</p><div class="grid"><article class="card"><h3>Claim</h3><p>What the producing agent says happened.</p></article><article class="card"><h3>Evidence</h3><p>What can be independently checked and bound to the candidate.</p></article><article class="card"><h3>Verification</h3><p>Deterministic checks over the required result set and trusted verifier identities.</p></article><article class="card"><h3>Authority</h3><p>The human or policy decision that may accept, merge or deploy.</p></article></div></div></section>
-    <section><div class="wrap"><h2>The control loop</h2><pre class="flow"><code>task / authority
+    <section class="hero" style="border-top:0"><div class="wrap">
+      <div class="eyebrow">Human Minority · AI coding-agent verification</div>
+      <h1>More agents.<br>Same veto.</h1>
+      <p><strong>Human Minority</strong> is a deterministic, source-available verification layer for AI coding agents and agentic coding workflows. The public V1 does not run a complete autonomous software factory. It provides a portable verification path that binds a producer claim, exact candidate bytes, required checks, trusted verifier IDs and verifier-result envelopes to the same candidate before canonical acceptance composition.</p>
+      <p>The rule behind the project is deliberately narrow: an agent saying “tests passed” or “ready to merge” is still only a claim. The public code checks the bindings and decision inputs instead of treating the producing agent's report as authority.</p>
+      <div class="claim">Claim is not proof.</div>
+      <div class="actions"><a class="btn primary" href="https://github.com/Rud0lfoRRP/Human-Minority">View the public repository</a><a class="btn" href="#quickstart">Run the public CLI</a></div>
+      <p><span class="status">Early development · public V1 CLI available · artifact stage: EARLY_SOURCE_DROP</span></p>
+    </div></section>
+
+    <section id="today"><div class="wrap">
+      <h2>What exists today</h2>
+      <p class="lead">The public repository is an Early Source Drop, not a finished production platform. These are the capabilities documented and shipped in the current public artifact.</p>
+      <div class="grid two">
+        <article class="card"><h3>Public CLI and exact candidate identity</h3><p>The installable <code>human-minority</code> CLI reports the public version, inspects the committed public artifact and evaluates an exact verification bundle. Candidate identity is recomputed from the actual candidate bytes using SHA-256.</p></article>
+        <article class="card"><h3>Verification contracts</h3><p>The artifact includes claim, evidence, verification-result and acceptance contracts, plus the same canonical acceptance composition used by the upstream implementation. The public path is not a separate demo-only reducer.</p></article>
+        <article class="card"><h3>Binding and veto checks</h3><p>The verifier path rejects missing, extra, duplicate or mismatched results. It also rejects producer/verifier role collapse when the producer is listed as a trusted verifier for the same verification vertical.</p></article>
+        <article class="card"><h3>Portable supporting primitives</h3><p>The export includes deterministic JSON and hashing helpers, source and portable-path contracts, bounded repair and scope-policy primitives, provider-neutral credential references, observation/freshness contracts, public tests and integrity checks.</p></article>
+      </div>
+      <div class="grid three">
+        <div class="card fact"><strong>License</strong><span>PolyForm Perimeter 1.0.1. Source-available, not OSI open source.</span></div>
+        <div class="card fact"><strong>Python</strong><span>Compatibility target: Python 3.12–3.14.</span></div>
+        <div class="card fact"><strong>Runtime dependencies</strong><span>Python standard library only.</span></div>
+      </div>
+    </div></section>
+
+    <section id="verify"><div class="wrap">
+      <h2>What the public verification path actually checks</h2>
+      <p class="lead">Public V1 evaluates a supplied verification bundle. It does not itself prove the real-world identity of a remote verifier and does not execute production provider orchestration.</p>
+      <div class="steps">
+        <div class="step"><strong>Read the candidate bytes.</strong> <span>The CLI recomputes the candidate SHA-256 instead of trusting a supplied candidate hash.</span></div>
+        <div class="step"><strong>Bind the producer claim.</strong> <span>The claim and candidate identity must agree with the bundle being evaluated.</span></div>
+        <div class="step"><strong>Require the declared checks.</strong> <span>The exact required check IDs and trusted verifier IDs are explicit inputs.</span></div>
+        <div class="step"><strong>Validate verifier-result envelopes.</strong> <span>Results must bind to the same candidate and claim; missing, extra, duplicate or mismatched results are rejected.</span></div>
+        <div class="step"><strong>Reject producer/verifier role collapse.</strong> <span>A producer cannot also be accepted as a trusted verifier for the same vertical.</span></div>
+        <div class="step"><strong>Compose the acceptance decision.</strong> <span>Only the exact required result set is passed into canonical acceptance composition.</span></div>
+      </div>
+    </div></section>
+
+    <section id="model"><div class="wrap">
+      <h2>The wider control model</h2>
+      <p class="lead">Human Minority is designed around separating claim, verification, repair and authority. The diagram below describes the intended control loop. The current public V1 implements the portable verification portion of this model; it does not publish the complete private execution and orchestration runtime.</p>
+      <pre class="flow"><code>task / authority
       |
       v
 candidate + claim
@@ -68,8 +155,46 @@ re-verification ------+
 human / policy decision
       |
       v
-controlled integration</code></pre></div></section>
-    <section id="quickstart"><div class="wrap"><h2>Run the public verification path.</h2><p class="lead">The current public artifact provides an installable CLI, exact candidate-byte identity with SHA-256, claim/evidence/result contracts, a runnable verification vertical and public integrity checks. Runtime dependencies are Python standard library only.</p><pre class="quick"><code>git clone https://github.com/Rud0lfoRRP/Human-Minority.git
+controlled integration</code></pre>
+      <p class="note"><strong>Important:</strong> the public source drop contains contracts and primitives for parts of this model, but it does not claim to expose the complete authority → verify → repair → re-verify → integrate runtime.</p>
+    </div></section>
+
+    <section id="boundary"><div class="wrap">
+      <h2>What this release does not claim</h2>
+      <p class="lead">The project documentation explicitly limits the public security and product boundary. The current public artifact does not demonstrate or provide the following:</p>
+      <div class="grid two">
+        <article class="card"><ul>
+          <li>secure execution of arbitrary untrusted repositories;</li>
+          <li>Docker or WSL confinement as a public product guarantee;</li>
+          <li>production agent or provider execution and orchestration;</li>
+          <li>operational deployment machinery;</li>
+          <li>production secret backends or credential custody.</li>
+        </ul></article>
+        <article class="card"><ul>
+          <li>cryptographic or remote verifier identity attestation;</li>
+          <li>autonomous repair execution;</li>
+          <li>merge or deployment authority;</li>
+          <li>bundled AI inference credits;</li>
+          <li>stable-production compatibility or support guarantees.</li>
+        </ul></article>
+      </div>
+      <p class="note">Trusted verifier IDs in public V1 are explicit authority input. The code checks their binding and the acceptance logic; it does not prove who a verifier is in the real world.</p>
+      <div class="actions"><a class="btn" href="https://github.com/Rud0lfoRRP/Human-Minority/blob/main/PUBLIC_BOUNDARY.md">Read PUBLIC_BOUNDARY.md</a><a class="btn" href="https://github.com/Rud0lfoRRP/Human-Minority/blob/main/SECURITY.md">Read SECURITY.md</a></div>
+    </div></section>
+
+    <section><div class="wrap">
+      <h2>Artifact integrity is not authenticity</h2>
+      <p class="lead"><code>human-minority inspect</code> checks the committed Git <code>HEAD</code> against the committed <code>export-manifest.json</code>: tracked-file membership, file modes, per-file SHA-256 values, the public boundary document and the security contact.</p>
+      <div class="grid two">
+        <article class="card"><h3>What PASS means</h3><p><code>integrity: PASS</code> means the committed tree is internally consistent with its committed manifest. <code>integrity_scope: COMMITTED_HEAD</code> means uncommitted files are outside that integrity decision.</p></article>
+        <article class="card"><h3>What PASS does not mean</h3><p><code>authenticity: NOT_ESTABLISHED</code> is deliberate. Self-consistency alone does not prove that a checkout is an official published artifact. Authenticity requires comparison with a trusted published repository or release reference.</p></article>
+      </div>
+    </div></section>
+
+    <section id="quickstart"><div class="wrap">
+      <h2>Run the public V1</h2>
+      <p class="lead">The public CLI requires Python 3.12–3.14. Installing the package itself does not require third-party runtime dependencies.</p>
+      <pre class="quick"><code>git clone https://github.com/Rud0lfoRRP/Human-Minority.git
 cd Human-Minority
 python -m pip install --no-deps .
 
@@ -77,9 +202,20 @@ human-minority --version
 human-minority inspect
 human-minority verify \
   --candidate examples/public_verification/candidate.txt \
-  --bundle examples/public_verification/bundle.json</code></pre></div></section>
-    <section><div class="wrap"><h2>Current public boundary</h2><p class="lead">Human Minority is in early development. The public V1 verifies portable claim/evidence/candidate bindings and decision logic. It does not claim to provide secure execution of arbitrary untrusted repositories, production provider orchestration, cryptographic verifier identity attestation, autonomous repair execution, merge authority or production secret custody.</p><div class="actions"><a class="btn" href="https://github.com/Rud0lfoRRP/Human-Minority/blob/main/PUBLIC_BOUNDARY.md">Read PUBLIC_BOUNDARY.md</a><a class="btn" href="https://github.com/Rud0lfoRRP/Human-Minority/blob/main/SECURITY.md">Security scope</a></div></div></section>
+  --bundle examples/public_verification/bundle.json</code></pre>
+      <p class="lead">The repository also includes an intentionally invalid role-collapse bundle so the rejection path can be exercised, not only the accepted path.</p>
+    </div></section>
+
+    <section id="faq" class="faq"><div class="wrap">
+      <h2>Frequently asked questions</h2>
+      <details><summary>Is Human Minority open source?</summary><p>No. The repository is source-available under PolyForm Perimeter 1.0.1. The project documentation explicitly says it is not OSI open source.</p></details>
+      <details><summary>Does Human Minority currently run AI agents or providers?</summary><p>Not in the public V1. Production agent/provider execution, operational orchestration and deployment machinery are outside the current public boundary.</p></details>
+      <details><summary>Does the public V1 independently run all verification checks?</summary><p>No. The public verification command evaluates an exact candidate together with a strict verification bundle containing explicit obligations, trusted verifier IDs and bound verifier-result envelopes. It verifies those bindings and the acceptance composition.</p></details>
+      <details><summary>Does it cryptographically prove verifier identity?</summary><p>No. Trusted verifier IDs are authority input in this release. Remote or cryptographic verifier identity attestation is explicitly outside the public boundary.</p></details>
+      <details><summary>Can the public V1 merge or deploy code?</summary><p>No. Merge and deployment authority are not provided by the public artifact.</p></details>
+      <details><summary>Why does public code still use <code>seed.app</code> paths?</summary><p>Human Minority is the public product and CLI surface. The exported verification primitives retain their canonical upstream <code>seed.app</code> package paths instead of being copied into a renamed demo-only implementation.</p></details>
+    </div></section>
   </main>
-  <footer><div class="wrap">Human Minority · verification and policy enforcement for AI coding agents · <a href="https://github.com/Rud0lfoRRP/Human-Minority">GitHub repository</a></div></footer>
+  <footer><div class="wrap">Human Minority · deterministic verification for AI coding-agent workflows · <a href="https://github.com/Rud0lfoRRP/Human-Minority">GitHub repository</a> · early development</div></footer>
 </body>
 </html>
