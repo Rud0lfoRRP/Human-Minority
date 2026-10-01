@@ -1,24 +1,47 @@
 # Human Minority
 
-Human Minority is a deterministic, source-available verification and policy-enforcement layer for AI coding agents and agentic coding workflows.
+Canonical name: Human Minority
+Repository name: Human-Minority
+Canonical website: https://rud0lforrp.github.io/Human-Minority/
+Canonical public repository: https://github.com/Rud0lfoRRP/Human-Minority
+
+Human Minority is a deterministic, source-available verification layer for AI coding agents and agentic coding workflows.
 
 Core rule: Claim is not proof.
 
-Human Minority separates:
-- Claim: what the producing agent says happened.
-- Evidence: independently checkable facts bound to the exact candidate.
-- Verification: deterministic evaluation of the required result set and trusted verifier identities.
-- Authority: the human or policy decision allowed to accept, merge, or deploy.
+Current public status: early development. The public artifact is an EARLY_SOURCE_DROP with an installable and runnable public V1 CLI.
 
-Current public status: early development, public V1 CLI available, artifact stage EARLY_SOURCE_DROP.
+What public V1 does:
+- recomputes exact candidate identity from candidate bytes using SHA-256;
+- evaluates producer claims and verifier-result envelopes bound to the same candidate;
+- requires the declared check IDs and explicit trusted verifier IDs;
+- rejects missing, extra, duplicate or mismatched verifier results;
+- rejects producer/verifier role collapse for the same verification vertical;
+- passes only the exact required result set into canonical acceptance composition;
+- provides committed artifact inspection against export-manifest.json;
+- includes deterministic JSON/hashing helpers, portable-path and source-identity contracts, bounded repair/scope-policy primitives, provider-neutral credential-reference and observation/freshness contracts, tests and CI.
 
-Public capabilities include an installable human-minority CLI, SHA-256 exact-candidate binding, claim/evidence/verification-result contracts, a runnable verification vertical, bounded repair primitives, and committed artifact integrity checks.
+Important trust limitation: trusted verifier IDs are explicit authority input. Public V1 checks their use and binding but does not cryptographically prove the real-world identity of a verifier.
 
-The public release does not claim secure execution of arbitrary untrusted repositories, production provider orchestration, cryptographic verifier identity attestation, autonomous repair execution, merge/deploy authority, or production secret custody.
+Artifact integrity limitation: human-minority inspect can establish internal consistency of committed HEAD with the committed export manifest. Self-consistency alone does not establish authenticity of a checkout.
 
-Canonical website: https://rud0lforrp.github.io/Human-Minority/
-GitHub repository: https://github.com/Rud0lfoRRP/Human-Minority
+The current public release does not claim to provide:
+- secure execution of arbitrary untrusted repositories;
+- Docker or WSL confinement as a public product guarantee;
+- production agent/provider execution or orchestration;
+- operational deployment machinery;
+- cryptographic or remote verifier identity attestation;
+- autonomous repair execution;
+- merge or deployment authority;
+- production secret custody;
+- bundled AI inference credits;
+- stable-production compatibility or support guarantees.
+
+License: PolyForm Perimeter 1.0.1. Human Minority is source-available and is not presented as OSI open source.
+Python compatibility target: 3.12-3.14.
+Runtime dependencies: Python standard library only.
+
 README: https://github.com/Rud0lfoRRP/Human-Minority/blob/main/README.md
 Public boundary: https://github.com/Rud0lfoRRP/Human-Minority/blob/main/PUBLIC_BOUNDARY.md
 Security: https://github.com/Rud0lfoRRP/Human-Minority/blob/main/SECURITY.md
-License: PolyForm Perimeter 1.0.1
+License file: https://github.com/Rud0lfoRRP/Human-Minority/blob/main/LICENSE
