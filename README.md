@@ -1,25 +1,55 @@
 # Human Minority
 
+**Human ambition. Machine scale.**
+
+Human Minority is a universal system for managing, coordinating, controlling and scaling AI agent work under human authority.
+
+Build and operate teams of AI agents across providers and domains. Expand the amount of work one person can direct without losing control over decisions, actions or outcomes.
+
+**Power scales. Authority stays human.**
+
+## Capabilities
+
+The following describes the intended full system, currently in active development.
+
+- **Manage** — Define goals, priorities, roles and responsibilities. Organise work around human objectives.
+- **Coordinate** — Assign work, manage dependencies and run multi-agent workflows.
+- **Control** — Enforce permissions, execution boundaries, budgets and resource limits.
+- **Verify** — Separate production from acceptance. Require evidence and independent checks.
+- **Scale** — Increase the volume and diversity of work one person can direct.
+
+## Operating model
+
+1. **Direct** — The human sets the goals, priorities and authority boundaries.
+2. **Execute** — Human Minority organises the work. Agents execute within their assigned responsibilities and resources.
+3. **Verify** — Assess results independently against the required evidence.
+4. **Decide** — Review results, unresolved risks and decisions that require human authority.
+
+## Principles
+
 **More agents. Same veto.**
 
-Human Minority is a governing system for AI agents that stays subordinate to a human. The human sets the goal and keeps the final approve, reject and veto. The system organises the agents' work, holds them to their permissions and budgets, and checks their results independently.
+- **Capability ≠ trust.** Capability alone does not grant permission.
+- **Claim ≠ proof.** An agent’s report is not proof that the work is correct.
+- **Reputation ≠ authority.** Past performance does not override human authority.
 
-AI agents already produce work faster than a person can check it. Human Minority is built to close that gap without taking the last word away from the human. Instead of a flood of agent output, the human receives a structured decision package: what was done, what is backed by evidence, what risks remain, and which decisions are needed.
+## Application
 
-## Three principles
+Software engineering is the first application. Human Minority is intended for agent-assisted work wherever tasks, responsibilities, resources and acceptance criteria can be defined, including research and business operations.
 
-- **Capability ≠ trust.** A capable model is not trusted by default.
-- **Claim ≠ proof.** An agent's own report is a claim until it is checked independently.
-- **Reputation ≠ authority.** A good track record never replaces the human's authority.
+These are illustrative application areas, not a claim of currently available integrations or domain-specific validation.
 
-Software development is the first application, because its results can be checked precisely. The approach itself is not limited to software.
+## Development status
 
-## Status
+The full Human Minority system is in active development and has not been publicly released. Public evidence and product ambitions are kept separate. No general availability, complete security guarantee or release date is claimed.
 
-Human Minority is in early development and is not yet a released product.
+**Available now:** [Human Minority Verifier](https://github.com/Rud0lfoRRP/Human-Minority-Verifier), the public source-available verification component. Its public V1 CLI evaluates exact candidate bytes, explicit claims, required checks and bound verifier results. It is a selected component of Human Minority, not the complete agent management system.
 
-Available now: **Human Minority Verifier**, the public verification component.
+Public artifact: Early Source Drop · PolyForm Perimeter 1.0.1 (source-available, not OSI open source).
 
-- Product website: https://rud0lforrp.github.io/Human-Minority/
-- Verifier repository: https://github.com/Rud0lfoRRP/Human-Minority-Verifier
-- Verifier website: https://rud0lforrp.github.io/Human-Minority-Verifier/
+## Links
+
+- [Product website](https://humanminority.com/)
+- [Verifier repository](https://github.com/Rud0lfoRRP/Human-Minority-Verifier)
+- [Verifier website](https://rud0lforrp.github.io/Human-Minority-Verifier/)
+- [Contact](mailto:yevhenii@humanminority.com)
