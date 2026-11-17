@@ -1,93 +1,266 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Human Minority — AI agents under human authority</title>
-  <meta name="description" content="Human Minority helps people supervise multiple AI agents, enforce permissions and independently verify results while keeping final human approval, rejection and veto. In development.">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://humanminority.com/">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Human Minority — More agents. Same veto.">
-  <meta property="og:description" content="A governing system for AI agents that stays subordinate to a human. Claim is not proof.">
-  <meta property="og:url" content="https://humanminority.com/">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Human Minority — More agents. Same veto.">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"SoftwareApplication","name":"Human Minority","url":"https://humanminority.com/","applicationCategory":"DeveloperApplication","description":"A governing system for AI agents that stays subordinate to a human. Early development.","isRelatedTo":{"@type":"SoftwareSourceCode","name":"Human Minority Verifier","codeRepository":"https://github.com/Rud0lfoRRP/Human-Minority-Verifier"}}
-  </script>
-  <style>
-    :root{color-scheme:dark;--bg:#0b0e13;--panel:#111722;--text:#eef2f7;--muted:#9ca9ba;--line:#273142;--accent:#b8ff5a;--accent2:#72d6ff;--max:1080px}
-    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:radial-gradient(circle at 75% 0,#14202d 0,transparent 38%),var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-    a{color:var(--accent2);text-decoration:none} a:hover{text-decoration:underline}.wrap{width:min(var(--max),calc(100% - 32px));margin:auto}
-    header{padding:22px 0;border-bottom:1px solid var(--line)} nav{display:flex;justify-content:space-between;gap:18px;align-items:center}.brand{font-weight:800;color:var(--text)}.navlinks{display:flex;gap:18px;flex-wrap:wrap}
-    .hero{padding:84px 0 58px}.eyebrow{color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.11em;font-size:.82rem}.hero h1{font-size:clamp(2.7rem,7vw,5.8rem);line-height:.97;letter-spacing:-.055em;margin:.35em 0 .25em;max-width:900px}.hero p{max-width:820px;color:var(--muted);font-size:1.17rem}.claim{font-size:clamp(1.4rem,3vw,2.1rem);font-weight:800;color:var(--text);margin-top:30px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.btn{display:inline-block;padding:11px 16px;border:1px solid var(--line);border-radius:10px;color:var(--text);background:var(--panel);font-weight:700}.btn.primary{background:var(--accent);border-color:var(--accent);color:#111}
-    section{padding:54px 0;border-top:1px solid var(--line)} h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;margin:0 0 16px} h3{margin-top:0}.lead{color:var(--muted);max-width:830px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px}.grid.two{grid-template-columns:repeat(2,1fr)}.card{border:1px solid var(--line);background:linear-gradient(180deg,#121925,#0f141d);border-radius:14px;padding:20px}.card p,.card li{color:var(--muted)}.card ul{padding-left:20px;margin-bottom:0}
-    .principle{font-size:1.45rem;font-weight:800;letter-spacing:-.02em;margin:0 0 8px}.principle span{color:var(--accent)}
-    .status{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--muted);font-size:.9rem}.note{border-left:3px solid var(--accent);padding:2px 0 2px 16px;color:var(--muted);max-width:850px}
-    .steps{counter-reset:step;display:grid;gap:12px;margin-top:24px}.step{counter-increment:step;border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--panel)}.step::before{content:counter(step);display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#111;font-weight:800;margin-right:10px}.step span{color:var(--muted)}
-    footer{padding:40px 0 60px;color:var(--muted);border-top:1px solid var(--line)}
-    @media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.grid.two{grid-template-columns:1fr}.hero{padding-top:58px}}@media(max-width:520px){.grid{grid-template-columns:1fr}.navlinks{display:none}}
-      .hero h1 .hero-tagline{display:block;font-size:.52em;line-height:1.12;letter-spacing:-.03em;margin-top:.2em}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human Minority — Human ambition. Machine scale.</title>
+<meta name="description" content="Human Minority is a universal system for managing, coordinating, controlling and scaling AI agent work under human authority, across providers and domains.">
+<meta name="robots" content="index,follow">
+<meta name="color-scheme" content="dark">
+<!-- Interim HM favicon; approved mascot and social preview artwork may be added separately. -->
+<link rel="canonical" href="https://humanminority.com/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%228%22%20fill%3D%22%230b0e13%22%2F%3E%3Crect%20x%3D%225%22%20y%3D%225%22%20width%3D%2254%22%20height%3D%2254%22%20rx%3D%224%22%20fill%3D%22none%22%20stroke%3D%22%2329333f%22%20stroke-width%3D%222%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2239%22%20text-anchor%3D%22middle%22%20font-family%3D%22system-ui%2Csans-serif%22%20font-size%3D%2224%22%20font-weight%3D%22800%22%20fill%3D%22%23b8ff5a%22%3EHM%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Human Minority">
+<meta property="og:title" content="Human Minority — Human ambition. Machine scale.">
+<meta property="og:description" content="Human Minority is a universal system for managing, coordinating, controlling and scaling AI agent work under human authority, across providers and domains.">
+<meta property="og:url" content="https://humanminority.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Human Minority — Human ambition. Machine scale.">
+<meta name="twitter:description" content="Human Minority is a universal system for managing, coordinating, controlling and scaling AI agent work under human authority, across providers and domains.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Human Minority","url":"https://humanminority.com/","description":"Human Minority is a universal system for managing, coordinating, controlling and scaling AI agent work under human authority, across providers and domains. The full system is in active development and has not been publicly released.","isRelatedTo":{"@type":"SoftwareSourceCode","name":"Human Minority Verifier","codeRepository":"https://github.com/Rud0lfoRRP/Human-Minority-Verifier"}}
+</script>
+<style>
+:root{--bg:#0b0e13;--surface:#111722;--text:#eef2f7;--muted:#a7b2c2;--line:#29333f;--accent:#b8ff5a;--max:1120px}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit;text-decoration:none}.skip-link{position:absolute;top:8px;left:8px;z-index:10;transform:translateY(-200%);padding:12px 16px;background:var(--accent);color:var(--bg)}.skip-link:focus{transform:translateY(0)}a:focus-visible{outline:2px solid var(--accent);outline-offset:5px}a:hover{color:var(--accent)}.wrap{width:min(var(--max),calc(100% - 64px));margin:auto}.eyebrow,.kicker{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--accent)}header{border-bottom:1px solid var(--line)}nav{min-height:76px;display:flex;justify-content:space-between;align-items:center;gap:24px}.brand{font-weight:800;letter-spacing:-.025em;font-size:1.1rem;display:flex;align-items:center;gap:12px}.mark{width:32px;height:32px;border:1px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--accent);letter-spacing:-.08em}.navlinks{display:flex;gap:26px;align-items:center;font-size:.86rem;color:var(--muted)}.hero{padding:100px 0 66px;position:relative;background:radial-gradient(ellipse at 80% 15%,#142019 0,transparent 45%)}.hero h1{font-size:clamp(3.2rem,7.6vw,6.7rem);line-height:.99;letter-spacing:-.065em;margin:24px 0 28px;font-weight:760;max-width:1000px}.hero h1 span{display:block;color:var(--accent)}.lead{font-size:clamp(1.12rem,2vw,1.4rem);color:var(--text);max-width:790px;line-height:1.55;margin:0 0 18px}.sub{color:var(--muted);max-width:735px;margin:0;font-size:1.04rem}.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:32px 0 0}.btn{padding:12px 19px;border:1px solid var(--line);font-size:.92rem;font-weight:700;display:inline-block;border-radius:5px}.btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}.btn.primary:hover{background:#d0ff99;color:var(--bg)}.status{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:8px;margin-top:24px}.dot{width:7px;height:7px;border:1px solid var(--accent);border-radius:50%;display:inline-block}.verbs{display:grid;grid-template-columns:repeat(5,1fr);border-block:1px solid var(--line);margin-top:56px}.verbs div{padding:17px 9px;color:var(--muted);font-size:clamp(.6rem,1.5vw,.85rem);font-weight:750;letter-spacing:.09em;text-align:center;border-right:1px solid var(--line)}.verbs div:last-child{border-right:0}.verbs div:first-child{color:var(--accent)}section.content{padding:78px 0;border-bottom:1px solid var(--line)}.section-head{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:40px}h2{font-size:clamp(2rem,4.7vw,3.6rem);line-height:1.09;letter-spacing:-.045em;margin:11px 0 0;font-weight:720}h3{margin:0 0 9px;font-size:1.17rem;letter-spacing:-.02em}p{margin:0 0 12px}.section-head p,.muted{color:var(--muted)}.section-head p{margin:0}.capabilities{border-top:1px solid var(--line)}.cap{display:grid;grid-template-columns:55px 190px 1fr;gap:20px;align-items:baseline;border-bottom:1px solid var(--line);padding:24px 0}.cap .num{color:var(--accent);font-size:.78rem;font-variant-numeric:tabular-nums}.cap h3{margin:0;font-size:1.35rem}.cap p{margin:0;color:var(--muted)}.system{margin:0;background:#0e131b;border:1px solid var(--line);padding:32px;display:grid;gap:20px;text-align:center}.node{border:1px solid var(--line);background:var(--surface);padding:16px;max-width:420px;width:100%;justify-self:center}.node b{display:block;letter-spacing:.03em}.node small{color:var(--muted);display:block}.node.core{border-color:var(--accent);color:var(--accent)}.connector{height:22px;width:1px;background:#637342;justify-self:center;position:relative}.connector:after{content:"";width:5px;height:5px;border-right:1px solid var(--accent);border-bottom:1px solid var(--accent);transform:rotate(45deg);position:absolute;bottom:0;left:-2px}.agents{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.agents .node{font-size:.92rem;padding:12px 6px}.system-note{font-size:.76rem;color:var(--muted);margin:0}.loop{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}.loop article{background:var(--bg);padding:20px}.loop .num{color:var(--accent);font-size:.75rem;display:block;margin-bottom:10px}.loop p{color:var(--muted);font-size:.9rem;margin:0}.principles{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}.principles article{background:var(--surface);padding:27px}.principles h3{font-size:1.4rem}.principles span{color:var(--accent)}.principles p{font-size:.93rem;color:var(--muted);margin:0}.domains{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}.domains article{border-top:1px solid var(--line);padding-top:19px}.domains p{color:var(--muted);font-size:.95rem}.release{display:grid;grid-template-columns:1fr 1fr;gap:22px}.release article{border:1px solid var(--line);padding:26px;background:var(--surface)}.release article:first-child{border-top:2px solid var(--accent)}.release h3{margin:14px 0}.release p{color:var(--muted)}.release a:not(.btn){color:var(--accent);font-weight:650}.closing{padding:74px 0}.closing h2{max-width:760px}.closing p{color:var(--muted);margin-top:16px}.closing .kicker{margin-bottom:12px}footer{border-top:1px solid var(--line);padding:28px 0 40px;font-size:.8rem;color:var(--muted)}footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px}@media(max-width:760px){.wrap{width:calc(100% - 36px)}.navlinks{gap:15px}nav.wrap{flex-direction:column;align-items:flex-start;justify-content:center;gap:12px;padding-block:16px}.navlinks{flex-wrap:wrap;gap:8px 18px}.navlinks a{display:inline-flex;align-items:center;min-height:32px}.hero{padding:64px 0 44px}.hero h1{font-size:clamp(2.45rem,11vw,5rem);overflow-wrap:break-word}.verbs{margin-top:38px;grid-template-columns:repeat(3,minmax(0,1fr));border-block:0;gap:1px;background:var(--line);border:1px solid var(--line)}.verbs div{border:0;background:var(--bg);padding:12px 6px;font-size:.7rem;letter-spacing:.06em}.verbs div:nth-child(4),.verbs div:nth-child(5){grid-column:auto}section.content{padding:52px 0}.section-head{grid-template-columns:1fr;gap:16px;margin-bottom:28px}.cap{grid-template-columns:32px 1fr;gap:6px 12px;padding:19px 0}.cap p{grid-column:2}.system{padding:19px 12px}.agents{grid-template-columns:repeat(2,1fr)}.loop{grid-template-columns:repeat(2,1fr)}.principles,.domains,.release{grid-template-columns:1fr}.domains{gap:16px}.closing{padding:50px 0}}@media(max-width:420px){.verbs{grid-template-columns:repeat(2,minmax(0,1fr))}.verbs div:last-child{grid-column:1/-1}.loop{grid-template-columns:1fr}.status .dot{flex-shrink:0}.footer-links{overflow-wrap:anywhere}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 </head>
 <body>
-  <header><div class="wrap"><nav><a class="brand" href="./">Human Minority</a><div class="navlinks"><a href="#principles">Principles</a><a href="#how">How it works</a><a href="#status">Status</a><a href="https://rud0lforrp.github.io/Human-Minority-Verifier/">Verifier</a></div></nav></div></header>
-  <main>
-    <section class="hero" style="border-top:0"><div class="wrap">
-      <div class="eyebrow">Human Minority · AI agents under human authority</div>
-      <h1>Human Minority<span class="hero-tagline">More agents. Same veto.</span></h1>
-      <p><strong>Human Minority</strong> is a governing system for AI agents that stays subordinate to a human. The human sets the goal and keeps the final approve, reject and veto. The system organises the agents' work, holds them to their permissions and budgets, and checks their results independently.</p>
-      <p>AI agents already produce work faster than a person can check it. Adding more agents makes that gap wider. Human Minority is built to close it without taking the last word away from the human.</p>
-      <div class="claim">Claim is not proof.</div>
-      <div class="actions"><a class="btn primary" href="#status">What is available today</a><a class="btn" href="https://rud0lforrp.github.io/Human-Minority-Verifier/">Human Minority Verifier</a></div>
-      <p><span class="status">Early development · not yet a released product</span></p>
-    </div></section>
+<a class="skip-link" href="#top">Skip to main content</a>
+<header>
+  <nav class="wrap" aria-label="Main navigation">
+    <a class="brand" href="#top"><span class="mark" aria-hidden="true">HM</span>Human Minority</a>
+    <div class="navlinks">
+      <a href="#system">The system</a>
+      <a href="#principles">Principles</a>
+      <a href="#status">Status</a>
+      <a href="https://github.com/Rud0lfoRRP/Human-Minority">GitHub ↗</a>
+    </div>
+  </nav>
+</header>
 
-    <section id="principles"><div class="wrap">
-      <h2>Three principles</h2>
-      <p class="lead">Every part of the system follows from three separations. An agent's strength, its own report and its track record are useful signals. None of them is, by itself, permission to act or proof that the work is right.</p>
-      <div class="grid">
-        <article class="card"><p class="principle">Capability <span>≠</span> trust</p><p>A capable model is not trusted by default. Each agent works inside explicit permissions, resources and boundaries set for the task.</p></article>
-        <article class="card"><p class="principle">Claim <span>≠</span> proof</p><p>"Tests passed" or "ready to merge" from the agent that did the work is a claim. Results are checked independently against the exact output.</p></article>
-        <article class="card"><p class="principle">Reputation <span>≠</span> authority</p><p>A good history can inform who gets the next task. It never replaces the human's authority to approve, reject or stop.</p></article>
-      </div>
-    </div></section>
+<main id="top" tabindex="-1">
 
-    <section id="how"><div class="wrap">
-      <h2>How it is meant to work</h2>
-      <p class="note">This section describes the intended product. Most of it is in development and not yet public; see <a href="#status">Status</a> for what exists today.</p>
-      <div class="steps">
-        <div class="step"><strong>The human sets the goal and the limits.</strong> <span>What should be done, by whom it may be done, and with which permissions and budget.</span></div>
-        <div class="step"><strong>The system assigns and supervises the agents.</strong> <span>It selects agents for the task, organises their work and enforces their permissions and resources while they run.</span></div>
-        <div class="step"><strong>Evidence is collected and checked independently.</strong> <span>Results are bound to the exact output and checked by a verifier that is not the agent that produced them.</span></div>
-        <div class="step"><strong>Verified history is kept.</strong> <span>What happened is recorded so it can be reviewed later and used to improve future assignments.</span></div>
-        <div class="step"><strong>The human decides.</strong> <span>Instead of a flood of agent output, the human gets a structured decision package and keeps the final word.</span></div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Human-led AI workforce management</div>
+      <h1>Human ambition.<span>Machine scale.</span></h1>
+      <p class="lead">Human Minority is a universal system for managing, coordinating, controlling and scaling AI agent work under human authority.</p>
+      <p class="sub">Build and operate teams of AI agents across providers and domains. Expand the amount of work one person can direct without losing control over decisions, actions or outcomes.</p>
+      <div class="actions">
+        <a class="btn primary" href="#system">Explore the system</a>
+        <a class="btn" href="#status">Development status</a>
       </div>
-    </div></section>
+      <div class="status"><span class="dot"></span>In development · Full system not yet publicly released</div>
+      <div class="verbs" aria-label="Five capabilities">
+        <div>MANAGE</div>
+        <div>COORDINATE</div>
+        <div>CONTROL</div>
+        <div>VERIFY</div>
+        <div>SCALE</div>
+      </div>
+    </div>
+  </section>
 
-    <section id="package"><div class="wrap">
-      <h2>What the human receives</h2>
-      <p class="lead">The goal is more human capability without a matching growth in review load. Each decision package answers four questions.</p>
-      <div class="grid two">
-        <article class="card"><h3>What was done</h3><p>The exact work the agents produced, tied to the task it was meant to complete.</p></article>
-        <article class="card"><h3>What is backed by evidence</h3><p>Which results were independently checked, and which are still only claims.</p></article>
-        <article class="card"><h3>What risks remain</h3><p>Open questions, failed or missing checks, and anything the system could not establish.</p></article>
-        <article class="card"><h3>Which decisions are needed</h3><p>Exactly what the human has to approve, reject or decide next.</p></article>
+  <!-- THE SYSTEM -->
+  <section class="content" id="system">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">01 / The system</div>
+          <h2>From individual agents<br>to a managed workforce.</h2>
+        </div>
+        <p>More agents do not automatically mean more useful work. Human Minority turns individual capabilities into organised execution: clear responsibilities, coordinated tasks and results that can be evaluated.</p>
       </div>
-      <p class="lead">Software development is the first application, because its results can be checked precisely. The approach itself is not limited to software.</p>
-    </div></section>
+      <div class="capabilities">
+        <article class="cap">
+          <span class="num">01</span>
+          <h3>Manage</h3>
+          <p>Define goals, priorities, roles and responsibilities. Organise work around human objectives.</p>
+        </article>
+        <article class="cap">
+          <span class="num">02</span>
+          <h3>Coordinate</h3>
+          <p>Assign work, manage dependencies and run multi-agent workflows.</p>
+        </article>
+        <article class="cap">
+          <span class="num">03</span>
+          <h3>Control</h3>
+          <p>Enforce permissions, execution boundaries, budgets and resource limits.</p>
+        </article>
+        <article class="cap">
+          <span class="num">04</span>
+          <h3>Verify</h3>
+          <p>Separate production from acceptance. Require evidence and independent checks.</p>
+        </article>
+        <article class="cap">
+          <span class="num">05</span>
+          <h3>Scale</h3>
+          <p>Increase the volume and diversity of work one person can direct.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-    <section id="status"><div class="wrap">
-      <h2>Status today</h2>
-      <p class="lead">Human Minority is in early development. It is not yet available as a product, and no release date is announced.</p>
-      <div class="grid two">
-        <article class="card"><h3>Available now: Human Minority Verifier</h3><p>The public verification component. It binds an agent's claim, the exact candidate bytes, the required checks and the verifier results, and decides from those bindings rather than from the agent's own report. Source-available under PolyForm Perimeter 1.0.1; not OSI open source.</p><p><a href="https://rud0lforrp.github.io/Human-Minority-Verifier/">Website</a> · <a href="https://github.com/Rud0lfoRRP/Human-Minority-Verifier">Repository</a></p></article>
-        <article class="card"><h3>In development</h3><ul><li>assigning and supervising agents from several providers;</li><li>enforcing permissions, resources and budgets during a run;</li><li>the human decision package and the approve / reject / veto flow;</li><li>verified history and improvement of future assignments.</li></ul><p>These parts are not public and are not covered by any availability or security claim on this page.</p></article>
+  <!-- OPERATING MODEL -->
+  <section class="content" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">02 / Operating model</div>
+          <h2>You set the direction.<br>The system organises work.</h2>
+        </div>
+        <p>Human Minority is designed as the management layer for the entire workflow. The human defines goals and authority boundaries. The system organises execution and prepares results for human decision.</p>
       </div>
-    </div></section>
-  </main>
-  <footer><div class="wrap">Human Minority · AI agents under human authority · early development · <a href="https://github.com/Rud0lfoRRP/Human-Minority">GitHub</a></div></footer>
+      <figure class="system" aria-labelledby="operating-model-caption">
+        <div class="node"><b>HUMAN</b><small>Goals · priorities · authority</small></div>
+        <div class="connector" aria-hidden="true"></div>
+        <div class="node core"><b>HUMAN MINORITY</b><small>Management · coordination · control · verification</small></div>
+        <div class="connector" aria-hidden="true"></div>
+        <div class="agents">
+          <div class="node"><b>AI agent</b><small>Role / task A</small></div>
+          <div class="node"><b>AI agent</b><small>Role / task B</small></div>
+          <div class="node"><b>AI agent</b><small>Role / task C</small></div>
+          <div class="node"><b>AI agent</b><small>Role / task N</small></div>
+        </div>
+        <figcaption class="system-note" id="operating-model-caption">Conceptual model of the intended system, not a live product interface.</figcaption>
+      </figure>
+      <div class="loop">
+        <article>
+          <span class="num">01</span>
+          <h3>Direct</h3>
+          <p>Set the outcome, priorities and boundaries.</p>
+        </article>
+        <article>
+          <span class="num">02</span>
+          <h3>Execute</h3>
+          <p>Agents work within their assigned responsibilities and resources.</p>
+        </article>
+        <article>
+          <span class="num">03</span>
+          <h3>Verify</h3>
+          <p>Assess the results independently against the required evidence.</p>
+        </article>
+        <article>
+          <span class="num">04</span>
+          <h3>Decide</h3>
+          <p>Review results, unresolved risks and decisions that require human authority.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="content" id="principles">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">03 / Human authority</div>
+          <h2>More agents.<br>Same veto.</h2>
+        </div>
+        <p>Power scales. Authority stays human. Control and verification are foundations of the management system, not substitutes for it.</p>
+      </div>
+      <div class="principles">
+        <article>
+          <h3>Capability <span>≠</span> trust.</h3>
+          <p>Capability alone does not grant permission.</p>
+        </article>
+        <article>
+          <h3>Claim <span>≠</span> proof.</h3>
+          <p>An agent’s report is not proof that the work is correct.</p>
+        </article>
+        <article>
+          <h3>Reputation <span>≠</span> authority.</h3>
+          <p>Past performance does not override human authority.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION -->
+  <section class="content">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">04 / Application</div>
+          <h2>Work is not limited<br>to software.</h2>
+        </div>
+        <p>Software engineering is the first application. The system is intended for agent-assisted work wherever tasks, responsibilities, resources and acceptance criteria can be defined.</p>
+      </div>
+      <div class="domains">
+        <article>
+          <h3>Software engineering</h3>
+          <p>Implementation, testing, review, documentation and release workflows.</p>
+        </article>
+        <article>
+          <h3>Research</h3>
+          <p>Information gathering, analysis, experimentation and evaluation.</p>
+        </article>
+        <article>
+          <h3>Business operations</h3>
+          <p>Analysis, planning, reporting and coordinated operational workflows.</p>
+        </article>
+      </div>
+      <p class="system-note">Illustrative application areas; not a claim of currently available integrations or domain-specific validation.</p>
+    </div>
+  </section>
+
+  <!-- STATUS -->
+  <section class="content" id="status">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <div class="kicker">05 / Development status</div>
+          <h2>What exists today.</h2>
+        </div>
+        <p>The full Human Minority system is in active development and has not been publicly released. Public evidence and product ambitions are kept separate.</p>
+      </div>
+      <div class="release">
+        <article>
+          <div class="kicker">Public · Available now</div>
+          <h3>Human Minority Verifier</h3>
+          <p>The source-available verification component. Its public V1 CLI evaluates exact candidate bytes, explicit claims, required checks and bound verifier results.</p>
+          <p>It is a selected component of Human Minority, not the complete agent management system.</p>
+          <p class="system-note">Public artifact: Early Source Drop · PolyForm Perimeter 1.0.1</p>
+          <a href="https://github.com/Rud0lfoRRP/Human-Minority-Verifier">Explore the public artifact ↗</a> · <a href="https://rud0lforrp.github.io/Human-Minority-Verifier/">Verifier website ↗</a>
+        </article>
+        <article>
+          <div class="kicker">In development · Not publicly released</div>
+          <h3>Human Minority</h3>
+          <p>The wider system for agent management, provider coordination, resource policies, controlled execution, independent verification and human decision-making.</p>
+          <p>No general availability, complete security guarantee or release date is claimed here.</p>
+          <a href="https://github.com/Rud0lfoRRP/Human-Minority">Product repository ↗</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing">
+    <div class="wrap">
+      <div class="kicker">Human Minority</div>
+      <h2>Power scales.<br>Authority stays human.</h2>
+      <p>Human ambition. Machine scale.</p>
+      <div class="actions">
+        <a class="btn" href="https://github.com/Rud0lfoRRP/Human-Minority">Follow development on GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Human Minority · Early development</span>
+    <span class="footer-links">
+      <a href="mailto:yevhenii@humanminority.com">Contact</a> ·
+      <a href="https://github.com/Rud0lfoRRP/Human-Minority">GitHub</a> ·
+      <a href="https://github.com/Rud0lfoRRP/Human-Minority-Verifier">Public verifier</a>
+    </span>
+  </div>
+</footer>
+
   <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ef46f22f0b0b4886b07a31eb496aceeb"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
