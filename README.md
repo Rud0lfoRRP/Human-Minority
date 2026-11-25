@@ -2,7 +2,7 @@
 
 **Human ambition. Machine scale.**
 
-Human Minority is a universal system for managing, coordinating, controlling and scaling AI agent work under human authority.
+Human Minority is a system for managing, coordinating, controlling and scaling AI agent work under human authority.
 
 Build and operate teams of AI agents across providers and domains. Expand the amount of work one person can direct without losing control over decisions, actions or outcomes.
 
@@ -52,4 +52,9 @@ Public artifact: Early Source Drop · PolyForm Perimeter 1.0.1 (source-available
 - [Product website](https://humanminority.com/)
 - [Verifier repository](https://github.com/Rud0lfoRRP/Human-Minority-Verifier)
 - [Verifier website](https://rud0lforrp.github.io/Human-Minority-Verifier/)
-- [Contact](mailto:yevhenii@humanminority.com)
+
+## Contact
+
+[Yevhenii Venher — Founder & CEO](mailto:yevhenii@humanminority.com)
+
+Email: [yevhenii@humanminority.com](mailto:yevhenii@humanminority.com)
